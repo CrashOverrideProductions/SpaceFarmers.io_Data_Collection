@@ -1,0 +1,148 @@
+﻿using SQLHandling;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Numerics;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace DataCollection.SpaceFarmers
+{
+    public class FarmerPartials
+    {
+        SQLHandling.DatabaseFunctions sql = new SQLHandling.DatabaseFunctions();
+
+
+        // Get API Data
+        public async Task<List<string>> getFarmerPartials(List<string> launcherID)
+        {
+            // Define Return Object
+            List<string> farmerpartialsList = new List<string>();
+
+            long collectionTimeStamp = Common.ConvertToUnixEpoch(DateTime.UtcNow);
+
+            foreach (string launcher in launcherID)
+            {
+                try
+                {
+                    // Get Last Update TimeStamp
+                    long lastUpdateTimeStamp = sql.getLastUpdateFarmerPartials(DatabaseFunctions.DataBasePath, launcher);
+                   
+                    // Data Object
+                    List<FarmerPartialsDatum> farmerPartialsResponse = new List<FarmerPartialsDatum>();
+
+                    // Make API Call
+                    string nextUrl = $"https://spacefarmers.io/api/farmers/{launcher}/partials";
+
+                    using (var client = new HttpClient())
+                    {
+                        while (!string.IsNullOrEmpty(nextUrl))
+                        {
+                            var response = await client.GetAsync(nextUrl);
+                            response.EnsureSuccessStatusCode();
+                            var jsonString = await response.Content.ReadAsStringAsync();
+
+                            var pageData = JsonSerializer.Deserialize<FarmerPartialsResponse>(jsonString);
+
+                            if (pageData?.data != null)
+                                farmerPartialsResponse.AddRange(pageData.data);
+
+                            nextUrl = pageData?.links?.next;
+
+                            // check if the data is older than the last update timestamp
+                            if (pageData?.data != null && pageData.data.Count > 0)
+                            {
+                                foreach (var partial in pageData.data)
+                                {
+                                    if (partial.attributes.timestamp < lastUpdateTimeStamp)
+                                    {
+                                        nextUrl = null;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                nextUrl = null;
+                            }
+                        }
+                    }
+
+                    foreach (var partial in farmerPartialsResponse)
+                    {
+                        // Prepare SQLite Insert
+                        string sqlLine = "INSERT OR REPLACE INTO FarmerPayoutBatches " +
+                                                    "(id,type,time,harvester_id,sp_hash,plot_filename,block,timestamp,harvester_name,error_code,points,time_taken,plot_id,collection_time_stamp) " +
+                                                    "VALUES ('" + partial.id + "','" +
+                                                                  partial.type + "','" +
+                                                                  partial.attributes.time + "','" +
+                                                                  partial.attributes.harvester_id + "','" +
+                                                                  partial.attributes.sp_hash + "','" +
+                                                                  partial.attributes.plot_filename + "','" +
+                                                                  partial.attributes.block + "','" +
+                                                                  partial.attributes.timestamp + "','" +
+                                                                  partial.attributes.harvester_name + "','" +
+                                                                  partial.attributes.error_code + "','" +
+                                                                  partial.attributes.points + "','" +
+                                                                  partial.attributes.time_taken + "','" +
+                                                                  partial.attributes.plot_id + "','" +
+                                                                  collectionTimeStamp + "')";
+
+                        // Add SQL Line to List
+                        farmerpartialsList.Add(sqlLine);
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    // Temp for testing
+                    Console.WriteLine("Error Retreiving Farmer Partials Batches: " + launcher);
+                    Console.WriteLine("Error Details: " + ex.Message);
+
+                    // Add to LogFile
+
+                }
+            }
+            return farmerpartialsList;
+        }
+    }
+
+    public class FarmerPartialsAttributes
+    {
+        public DateTime time { get; set; }
+        public string harvester_id { get; set; }
+        public string sp_hash { get; set; }
+        public string plot_filename { get; set; }
+        public bool block { get; set; }
+        public int timestamp { get; set; }
+        public string harvester_name { get; set; }
+        public string error_code { get; set; }
+        public int points { get; set; }
+        public int? time_taken { get; set; }
+        public string plot_id { get; set; }
+    }
+
+    public class FarmerPartialsDatum
+    {
+        public string id { get; set; }
+        public string type { get; set; }
+        public FarmerPartialsAttributes attributes { get; set; }
+    }
+
+    public class FarmerPartialsLinks
+    {
+        public int total_pages { get; set; }
+        public object prev { get; set; }
+        public string next { get; set; }
+    }
+
+    public class FarmerPartialsResponse
+    {
+        public List<FarmerPartialsDatum> data { get; set; }
+        public FarmerPartialsLinks links { get; set; }
+    }
+
+}

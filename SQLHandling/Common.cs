@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SQLHandling
+{
+    public class Common
+    {
+        public static List<string> sqlLines = new List<string>();
+
+        public void initDatabase()
+        {
+            // Init Database Prequisites
+            SQLitePCL.Batteries_V2.Init(); 
+        }
+
+        public void WriteSQLConsole()
+        {
+            foreach (string line in sqlLines)
+            {
+                Console.WriteLine(line);
+            }
+        }   
+    }
+}

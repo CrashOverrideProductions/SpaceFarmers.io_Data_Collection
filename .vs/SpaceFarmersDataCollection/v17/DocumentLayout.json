@@ -1,0 +1,93 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CC075014-F0C8-4F88-96EF-3938D20695D2}|SQLHandling\\SQLHandling.csproj|c:\\users\\justinbland\\documents\\github\\spacefarmers.io_data_collection\\sqlhandling\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC075014-F0C8-4F88-96EF-3938D20695D2}|SQLHandling\\SQLHandling.csproj|solutionrelative:sqlhandling\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|TestingConsoleApp||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22A53137-8A63-455B-A90C-DAE46F8EA407}|TestingConsoleApp\\TestingConsoleApp.csproj|c:\\users\\justinbland\\documents\\github\\spacefarmers.io_data_collection\\testingconsoleapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22A53137-8A63-455B-A90C-DAE46F8EA407}|TestingConsoleApp\\TestingConsoleApp.csproj|solutionrelative:testingconsoleapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC075014-F0C8-4F88-96EF-3938D20695D2}|SQLHandling\\SQLHandling.csproj|c:\\users\\justinbland\\documents\\github\\spacefarmers.io_data_collection\\sqlhandling\\databasefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC075014-F0C8-4F88-96EF-3938D20695D2}|SQLHandling\\SQLHandling.csproj|solutionrelative:sqlhandling\\databasefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22A53137-8A63-455B-A90C-DAE46F8EA407}|TestingConsoleApp\\TestingConsoleApp.csproj|c:\\users\\justinbland\\documents\\github\\spacefarmers.io_data_collection\\testingconsoleapp\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|a54ad834-9219-4aa6-b589-607af21c3e26"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TestingConsoleApp",
+              "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\TestingConsoleApp\\TestingConsoleApp.csproj",
+              "RelativeDocumentMoniker": "TestingConsoleApp\\TestingConsoleApp.csproj",
+              "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\TestingConsoleApp\\TestingConsoleApp.csproj",
+              "RelativeToolTip": "TestingConsoleApp\\TestingConsoleApp.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-05-11T08:06:29.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Common.cs",
+              "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\SQLHandling\\Common.cs",
+              "RelativeDocumentMoniker": "SQLHandling\\Common.cs",
+              "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\SQLHandling\\Common.cs",
+              "RelativeToolTip": "SQLHandling\\Common.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T07:47:49.631Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\TestingConsoleApp\\Program.cs",
+              "RelativeDocumentMoniker": "TestingConsoleApp\\Program.cs",
+              "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\TestingConsoleApp\\Program.cs",
+              "RelativeToolTip": "TestingConsoleApp\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T07:48:24.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DatabaseFunctions.cs",
+              "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\SQLHandling\\DatabaseFunctions.cs",
+              "RelativeDocumentMoniker": "SQLHandling\\DatabaseFunctions.cs",
+              "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\SQLHandling\\DatabaseFunctions.cs",
+              "RelativeToolTip": "SQLHandling\\DatabaseFunctions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC0AAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T07:18:23.169Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
