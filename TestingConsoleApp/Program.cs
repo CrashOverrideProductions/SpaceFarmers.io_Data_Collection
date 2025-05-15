@@ -27,7 +27,6 @@ namespace TestingConsoleApp
 
         static void Main(string[] args)
         {
-            sQLHandling.initDatabase();
 
 
             launcherID.Add("0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3");
@@ -75,12 +74,12 @@ namespace TestingConsoleApp
             SQLHandling.Common.sqlLines.AddRange(farmerBlocks.getFarmerBlocks(launcherID).Result);
 
             // Get Farmer Payouts
-            Console.WriteLine("Getting Farmer Payouts...");
-            SQLHandling.Common.sqlLines.AddRange(farmerPayouts.getFarmerPayouts(launcherID).Result);
+           // Console.WriteLine("Getting Farmer Payouts...");
+           // SQLHandling.Common.sqlLines.AddRange(farmerPayouts.getFarmerPayouts(launcherID).Result);
 
             // Get Farmer Payout Batches
-            Console.WriteLine("Getting Farmer Payout Batches...");
-            SQLHandling.Common.sqlLines.AddRange(farmerPayoutBatches.getFarmerPayoutBatches(launcherID).Result);
+          //  Console.WriteLine("Getting Farmer Payout Batches...");
+          //  SQLHandling.Common.sqlLines.AddRange(farmerPayoutBatches.getFarmerPayoutBatches(launcherID).Result);
 
             // Get Farmer Partials
             Console.WriteLine("Getting Farmer Partials...");

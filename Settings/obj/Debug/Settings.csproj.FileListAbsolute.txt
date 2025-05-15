@@ -1,0 +1,6 @@
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Settings\bin\Debug\Settings.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Settings\bin\Debug\Settings.pdb
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Settings\obj\Debug\Settings.csproj.AssemblyReference.cache
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Settings\obj\Debug\Settings.csproj.CoreCompileInputs.cache
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Settings\obj\Debug\Settings.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Settings\obj\Debug\Settings.pdb

@@ -36,3 +36,13 @@ C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingCon
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\SQLitePCLRaw.batteries_v2.dll
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\SQLitePCLRaw.provider.dynamic_cdecl.dll
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\SQLHandling.dll.config
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\x86\sqlite3.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\x64\sqlite3.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\EntityFramework.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\System.Data.SQLite.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\EntityFramework.xml
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\TestingConsoleApp\bin\Debug\System.Data.SQLite.xml

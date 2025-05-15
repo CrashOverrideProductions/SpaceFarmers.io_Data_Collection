@@ -1,0 +1,6 @@
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Pushover\bin\Debug\Pushover.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Pushover\bin\Debug\Pushover.pdb
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Pushover\obj\Debug\Pushover.csproj.AssemblyReference.cache
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Pushover\obj\Debug\Pushover.csproj.CoreCompileInputs.cache
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Pushover\obj\Debug\Pushover.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Pushover\obj\Debug\Pushover.pdb

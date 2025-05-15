@@ -10,11 +10,7 @@ namespace SQLHandling
     {
         public static List<string> sqlLines = new List<string>();
 
-        public void initDatabase()
-        {
-            // Init Database Prequisites
-            SQLitePCL.Batteries_V2.Init(); 
-        }
+       
 
         public void WriteSQLConsole()
         {

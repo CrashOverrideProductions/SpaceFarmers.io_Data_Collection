@@ -24,13 +24,11 @@ C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollec
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\System.Text.Encodings.Web.xml
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\System.Text.Json.xml
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\System.Threading.Tasks.Extensions.xml
-C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\System.ValueTuple.xml
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\obj\Debug\DataColl.6593A377.Up2Date
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\obj\Debug\DataCollection.dll
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\obj\Debug\DataCollection.pdb
-C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\Microsoft.Data.Sqlite.dll
-C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\SQLitePCLRaw.core.dll
-C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\Microsoft.Data.Sqlite.xml
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\SQLHandling.dll.config
-C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\SQLitePCLRaw.batteries_v2.dll
-C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\SQLitePCLRaw.provider.dynamic_cdecl.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\x86\sqlite3.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\x64\sqlite3.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\System.Data.SQLite.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\DataCollection\bin\Debug\System.Data.SQLite.xml

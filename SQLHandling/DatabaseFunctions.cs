@@ -5,7 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
 using static System.Net.Mime.MediaTypeNames;
 
 
@@ -17,11 +17,11 @@ namespace SQLHandling
         internal static string DatabaseFolder = AppDomain.CurrentDomain.BaseDirectory;
         public static string DataBasePath = Path.Combine(DatabaseFolder, DatabaseName);
 
-        public static bool TestSQLConnection(string DataBasePath)
+        public static bool TestSQLConnection(string path)
         {
             try
             {
-                using (var connection = new SqliteConnection($"Data Source={DataBasePath}"))
+                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
                 {
                     connection.Open();
                     return true;
@@ -34,6 +34,7 @@ namespace SQLHandling
             }
         }
 
+
         public static void CreateDatabase(string path)
         {
             try
@@ -41,7 +42,7 @@ namespace SQLHandling
                 // Create the file if it doesn't exist
                 if (!File.Exists(path))
                 {
-                    using (var connection = new SqliteConnection($"Data Source={path}"))
+                    using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
                     {
                         connection.Open();
 
@@ -67,7 +68,7 @@ namespace SQLHandling
         {
             try
             {
-                using (var connection = new SqliteConnection($"Data Source={path}"))
+                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
                 {
                     connection.Open();
 
@@ -193,7 +194,7 @@ namespace SQLHandling
 
             try
             {
-                using (var connection = new SqliteConnection($"Data Source={path}"))
+                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
                 {
                     connection.Open();
 
@@ -225,7 +226,7 @@ namespace SQLHandling
 
             try
             {
-                using (var connection = new SqliteConnection($"Data Source={path}"))
+                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
                 {
                     connection.Open();
 
@@ -257,7 +258,7 @@ namespace SQLHandling
 
             try
             {
-                using (var connection = new SqliteConnection($"Data Source={path}"))
+                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
                 {
                     connection.Open();
 
@@ -289,7 +290,7 @@ namespace SQLHandling
 
             try
             {
-                using (var connection = new SqliteConnection($"Data Source={path}"))
+                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
                 {
                     connection.Open();
 
@@ -321,7 +322,7 @@ namespace SQLHandling
 
             try
             {
-                using (var connection = new SqliteConnection($"Data Source={path}"))
+                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
                 {
                     connection.Open();
 

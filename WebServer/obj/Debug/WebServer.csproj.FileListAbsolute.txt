@@ -1,0 +1,6 @@
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\bin\Debug\WebServer.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\bin\Debug\WebServer.pdb
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\obj\Debug\WebServer.csproj.AssemblyReference.cache
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\obj\Debug\WebServer.csproj.CoreCompileInputs.cache
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\obj\Debug\WebServer.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\obj\Debug\WebServer.pdb

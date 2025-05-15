@@ -1,0 +1,9 @@
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Logging\bin\Debug\Logging.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Logging\bin\Debug\Logging.pdb
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Logging\bin\Debug\Pushover.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Logging\bin\Debug\Pushover.pdb
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Logging\obj\Debug\Logging.csproj.AssemblyReference.cache
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Logging\obj\Debug\Logging.csproj.CoreCompileInputs.cache
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Logging\obj\Debug\Logging.csproj.Up2Date
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Logging\obj\Debug\Logging.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\Logging\obj\Debug\Logging.pdb
