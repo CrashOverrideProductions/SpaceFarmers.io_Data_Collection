@@ -26,6 +26,10 @@ namespace DataCollection.SpaceFarmers
             {
                 try
                 {
+                    int counter = 0;
+                    int totalpages = 0;
+                    int payoutid = 0;
+
                     // Get Last Update TimeStamp
                     long lastUpdateTimeStamp = sql.getLastUpdateFarmerPayouts(DatabaseFunctions.DataBasePath, launcher);
 
@@ -39,32 +43,57 @@ namespace DataCollection.SpaceFarmers
                     {
                         while (!string.IsNullOrEmpty(nextUrl))
                         {
-                            var response = await client.GetAsync(nextUrl);
-                            response.EnsureSuccessStatusCode();
-                            var jsonString = await response.Content.ReadAsStringAsync();
-
-                            var pageData = JsonSerializer.Deserialize<FarmerPayoutResponse>(jsonString);
-
-                            if (pageData?.data != null)
-                                farmerBlocksResponse.AddRange(pageData.data);
-
-                            nextUrl = pageData?.links?.next;
-
-                            // check if the data is older than the last update timestamp
-                            if (pageData?.data != null && pageData.data.Count > 0)
+                            try
                             {
-                                foreach (var payout in pageData.data)
+                                var response = await client.GetAsync(nextUrl);
+                                response.EnsureSuccessStatusCode();
+                                var jsonString = await response.Content.ReadAsStringAsync();
+
+                                var pageData = JsonSerializer.Deserialize<FarmerPayoutResponse>(jsonString);
+
+                                if (pageData?.data != null)
+                                    farmerBlocksResponse.AddRange(pageData.data);
+
+                                // Testing
+                                payoutid = pageData?.data?.Count > 0 ? pageData.data.Max(x => int.Parse(x.id)) : 0;
+                                totalpages = pageData?.links?.total_pages ?? 0;
+                                counter++;
+
+                                nextUrl = pageData?.links?.next;
+
+                                Console.WriteLine("Page: " + counter + " of " + totalpages);
+                                // END Testing
+
+                                // Minor delay to avoid hitting the API too fast and upsetting SpaceFarmers Dev Team
+                                System.Threading.Thread.Sleep(125);
+
+                                // check if the data is older than the last update timestamp
+                                if (pageData?.data != null && pageData.data.Count > 0)
                                 {
-                                    if (payout.attributes.timestamp < lastUpdateTimeStamp)
+                                    foreach (var payout in pageData.data)
                                     {
-                                        nextUrl = null;
-                                        break;
+                                        if (payout.attributes.timestamp < lastUpdateTimeStamp)
+                                        {
+                                            Console.WriteLine("Farmer Payout data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages);
+
+                                            nextUrl = null;
+                                            break;
+                                        }
                                     }
                                 }
+                                else
+                                {
+                                    nextUrl = null;
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                nextUrl = null;
+                                nextUrl = null; // Set to null to exit loop
+                                Console.WriteLine("");
+                                Console.WriteLine("PayoutID: " + payoutid);
+                                Console.WriteLine("Page: " + counter);
+                                Console.WriteLine("Error Retreiving Farmer Payouts: " + ex.Message);
+
                             }
                         }
                     }
@@ -72,12 +101,13 @@ namespace DataCollection.SpaceFarmers
                     foreach (var payout in farmerBlocksResponse)
                     {
                         // Prepare SQLite Insert
-                        string sqlLine = "INSERT INTO FarmerPayouts (id,type,launcher_id,block_id,amount,fee,fee_amount,transaction_id,payout_batch_id,status,datetime,timestamp,xch_usd,coin,collection_time_stamp) " +
+                        string sqlLine = "INSERT OR REPLACE INTO FarmerPayouts " +
+                                                    "(id,type,launcher_id,block_id,amount,fee,fee_amount,transaction_id,payout_batch_id,status,datetime,timestamp,xch_usd,coin,collection_time_stamp) " +
                                                     "VALUES ('" + payout.id + "','" +
                                                                   payout.type + "','" +
                                                                   payout.attributes.launcher_id + "','" +
                                                                   payout.attributes.block_id + "','" +
-                                                                  payout.attributes.amount + "'," +
+                                                                  payout.attributes.amount + "','" +
                                                                   payout.attributes.fee + "','" +
                                                                   payout.attributes.fee_amount + "','" +
                                                                   payout.attributes.transaction_id + "','" +
@@ -112,15 +142,15 @@ namespace DataCollection.SpaceFarmers
     public class FarmerPayoutAttributes
     {
         public string launcher_id { get; set; }
-        public int block_id { get; set; }
-        public int amount { get; set; }
+        public long block_id { get; set; }
+        public long amount { get; set; }
         public string fee { get; set; }
         public int fee_amount { get; set; }
-        public object transaction_id { get; set; }
-        public object payout_batch_id { get; set; }
+        public string transaction_id { get; set; }
+        public long? payout_batch_id { get; set; }
         public string status { get; set; }
         public DateTime datetime { get; set; }
-        public int timestamp { get; set; }
+        public long timestamp { get; set; }
         public double xch_usd { get; set; }
         public string coin { get; set; }
     }

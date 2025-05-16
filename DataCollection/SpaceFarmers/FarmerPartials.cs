@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -27,6 +28,9 @@ namespace DataCollection.SpaceFarmers
             {
                 try
                 {
+                    int counter = 0;
+                    int totalpages = 0;
+
                     // Get Last Update TimeStamp
                     long lastUpdateTimeStamp = sql.getLastUpdateFarmerPartials(DatabaseFunctions.DataBasePath, launcher);
                    
@@ -49,6 +53,11 @@ namespace DataCollection.SpaceFarmers
                             if (pageData?.data != null)
                                 farmerPartialsResponse.AddRange(pageData.data);
 
+                            Console.WriteLine("Farmer Partials Data, Page " + counter + " of " + totalpages);
+
+                            totalpages = pageData?.links?.total_pages ?? 0;
+                            counter++;
+
                             nextUrl = pageData?.links?.next;
 
                             // check if the data is older than the last update timestamp
@@ -58,6 +67,7 @@ namespace DataCollection.SpaceFarmers
                                 {
                                     if (partial.attributes.timestamp < lastUpdateTimeStamp)
                                     {
+                                        Console.WriteLine("Farmer Partials Data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages);
                                         nextUrl = null;
                                         break;
                                     }
@@ -73,8 +83,8 @@ namespace DataCollection.SpaceFarmers
                     foreach (var partial in farmerPartialsResponse)
                     {
                         // Prepare SQLite Insert
-                        string sqlLine = "INSERT OR REPLACE INTO FarmerPayoutBatches " +
-                                                    "(id,type,time,harvester_id,sp_hash,plot_filename,block,timestamp,harvester_name,error_code,points,time_taken,plot_id,collection_time_stamp) " +
+                        string sqlLine = "INSERT OR REPLACE INTO FarmerPartials " +
+                                                    "(id,type,time,harvester_id,sp_hash,plot_filename,block,timestamp,harvester_name,error_code,points,time_taken,plot_id,launcher_id,collection_time_stamp) " +
                                                     "VALUES ('" + partial.id + "','" +
                                                                   partial.type + "','" +
                                                                   partial.attributes.time + "','" +
@@ -88,6 +98,7 @@ namespace DataCollection.SpaceFarmers
                                                                   partial.attributes.points + "','" +
                                                                   partial.attributes.time_taken + "','" +
                                                                   partial.attributes.plot_id + "','" +
+                                                                  launcher + "','" +
                                                                   collectionTimeStamp + "')";
 
                         // Add SQL Line to List
@@ -117,7 +128,7 @@ namespace DataCollection.SpaceFarmers
         public string sp_hash { get; set; }
         public string plot_filename { get; set; }
         public bool block { get; set; }
-        public int timestamp { get; set; }
+        public long timestamp { get; set; }
         public string harvester_name { get; set; }
         public string error_code { get; set; }
         public int points { get; set; }

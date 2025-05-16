@@ -8,6 +8,7 @@ using System.Numerics;
 using System.Text.Json;
 using Microsoft.SqlServer.Server;
 using SQLHandling;
+using System.Reflection;
 
 namespace DataCollection.SpaceFarmers
 {
@@ -28,6 +29,9 @@ namespace DataCollection.SpaceFarmers
             {
                 try
                 {
+                    int counter = 0;
+                    int totalpages = 0;
+
                     // Get Last Update TimeStamp
                     long lastUpdateTimeStamp = sql.getLastUpdateFarmerBlocks(DatabaseFunctions.DataBasePath, launcher);
 
@@ -50,6 +54,11 @@ namespace DataCollection.SpaceFarmers
                             if (pageData?.data != null)
                                 farmerBlocksResponse.AddRange(pageData.data);
 
+                            Console.WriteLine("Farmer Blocks Data, Page " + counter + " of " + totalpages);
+
+                            totalpages = pageData?.links?.total_pages ?? 0;
+                            counter++;
+
                             nextUrl = pageData?.links?.next;
 
                             // check if the data is older than the last update timestamp
@@ -59,6 +68,7 @@ namespace DataCollection.SpaceFarmers
                                 {
                                     if (block.attributes.timestamp < lastUpdateTimeStamp)
                                     {
+                                        Console.WriteLine("Farmer Blocks Data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages);
                                         nextUrl = null;
                                         break;
                                     }
@@ -75,22 +85,22 @@ namespace DataCollection.SpaceFarmers
                     foreach (var block in farmerBlocksResponse)
                     {
                         // Prepare SQLite Insert
-                        string sqlLine = "INSERT INTO FarmerBlocks (id,type,height,datetime,amount,effort,farmer_effort,launcher_id,farmer_name,payouts,timestamp,farmer_reward,farmer_reward_taken_by_gigahorse,collection_time_stamp) " +
+                        string sqlLine = "INSERT OR REPLACE INTO FarmerBlocks " +
+                                                    "(id,type,datetime,height,amount,effort,farmer_effort,launcher_id,farmer_name,payouts,timestamp,farmer_reward,farmer_reward_taken_by_gigahorse,collection_time_stamp) " +
                                                     "VALUES ('" + block.id + "','" +
                                                                   block.type + "','" +
-                                                                  block.attributes.datetime + "," +
-                                                                  block.attributes.height + "," +
-                                                                  block.attributes.datetime + "," +
-                                                                  block.attributes.amount + "," +
-                                                                  block.attributes.effort + "," +
-                                                                  block.attributes.farmer_effort + ",'" +
-                                                                  block.attributes.launcher_id + "'," +
-                                                                  block.attributes.farmer_name + "," +
-                                                                  block.attributes.payouts + "," +
-                                                                  block.attributes.timestamp + "," +
-                                                                  block.attributes.farmer_reward + "," +
-                                                                  block.attributes.farmer_reward_taken_by_gigahorse +
-                                                                  collectionTimeStamp + ")";
+                                                                  block.attributes.datetime + "','" +
+                                                                  block.attributes.height + "','" +
+                                                                  block.attributes.amount + "','" +
+                                                                  block.attributes.effort + "','" +
+                                                                  block.attributes.farmer_effort + "','" +
+                                                                  block.attributes.launcher_id + "','" +
+                                                                  block.attributes.farmer_name + "','" +
+                                                                  block.attributes.payouts + "','" +
+                                                                  block.attributes.timestamp + "','" +
+                                                                  block.attributes.farmer_reward + "','" +
+                                                                  block.attributes.farmer_reward_taken_by_gigahorse + "','" +
+                                                                  collectionTimeStamp + "')";
 
                         // Add SQL Line to List
                         farmerBlocksList.Add(sqlLine);
@@ -116,15 +126,15 @@ namespace DataCollection.SpaceFarmers
     public class FarmerBlocksAttributes
     {
         public DateTime datetime { get; set; }
-        public int height { get; set; }
+        public long height { get; set; }
         public object amount { get; set; }
         public double effort { get; set; }
         public double farmer_effort { get; set; }
         public string launcher_id { get; set; }
         public string farmer_name { get; set; }
-        public int payouts { get; set; }
-        public int timestamp { get; set; }
-        public object farmer_reward { get; set; }
+        public long payouts { get; set; }
+        public long timestamp { get; set; }
+        public long farmer_reward { get; set; }
         public bool farmer_reward_taken_by_gigahorse { get; set; }
     }
 

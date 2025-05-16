@@ -26,8 +26,11 @@ namespace DataCollection.SpaceFarmers
             {
                 try
                 {
+                    int counter = 0;
+                    int totalpages = 0;
+
                     // Data Object
-                    List<FarmerPayoutBatcheDatum> farmerPayoutBatchesResponse = new List<FarmerPayoutBatcheDatum>();
+                    List<FarmerPayoutBatchDatum> farmerPayoutBatchesResponse = new List<FarmerPayoutBatchDatum>();
 
                     // Get Last Update TimeStamp
                     long lastUpdateTimeStamp = sql.getLastUpdateFarmerPayoutBatch(DatabaseFunctions.DataBasePath, launcher);
@@ -48,6 +51,11 @@ namespace DataCollection.SpaceFarmers
                             if (pageData?.data != null)
                                 farmerPayoutBatchesResponse.AddRange(pageData.data);
 
+                            Console.WriteLine("Farmer Payout Batches Data, Page " + counter + " of " + totalpages);
+
+                            totalpages = pageData?.links?.total_pages ?? 0;
+                            counter++;
+
                             nextUrl = pageData?.links?.next;
 
                             // check if the data is older than the last update timestamp
@@ -57,6 +65,8 @@ namespace DataCollection.SpaceFarmers
                                 {
                                     if (payoutBatch.attributes.timestamp < lastUpdateTimeStamp)
                                     {
+                                        Console.WriteLine("Farmer Payout Batches Data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages);
+
                                         nextUrl = null;
                                         break;
                                     }
@@ -75,18 +85,18 @@ namespace DataCollection.SpaceFarmers
                         string sqlLine = "INSERT OR REPLACE INTO " +
                                                     "FarmerPayoutBatches (id,type,payout_batch_id,launcher_id,amount,fee,fee_amount,transaction_id,payout_count,status,timestamp,coin,collection_time_stamp) " +
                                                     "VALUES ('" + batch.id + "','" +
-                                                                  batch.type + "'," +
-                                                                  batch.attributes.payout_batch_id + ",'" +
-                                                                  batch.attributes.launcher_id + "'," +
-                                                                  batch.attributes.amount + "," +
-                                                                  batch.attributes.fee + "," +
-                                                                  batch.attributes.fee_amount + ",'" +
-                                                                  batch.attributes.transaction_id + "'," +
-                                                                  batch.attributes.payout_count + ",'" +
+                                                                  batch.type + "','" +
+                                                                  batch.attributes.payout_batch_id + "','" +
+                                                                  batch.attributes.launcher_id + "','" +
+                                                                  batch.attributes.amount + "','" +
+                                                                  batch.attributes.fee + "','" +
+                                                                  batch.attributes.fee_amount + "','" +
+                                                                  batch.attributes.transaction_id + "','" +
+                                                                  batch.attributes.payout_count + "','" +
                                                                   batch.attributes.status + "','" +
                                                                   batch.attributes.timestamp + "','" +
-                                                                  batch.attributes.coin + "'," +
-                                                                  collectionTimeStamp + ")";
+                                                                  batch.attributes.coin + "','" +
+                                                                  collectionTimeStamp + "')";
 
                         // Add SQL Line to List
                         farmerPayoutBatchList.Add(sqlLine);
@@ -108,28 +118,28 @@ namespace DataCollection.SpaceFarmers
         }
     }
 
-    public class FarmerPayoutBatcheAttributes
+    public class FarmerPayoutBatchAttributes
     {
-        public int payout_batch_id { get; set; }
+        public long payout_batch_id { get; set; }
         public string launcher_id { get; set; }
-        public object amount { get; set; }
+        public long amount { get; set; }
         public string fee { get; set; }
-        public int fee_amount { get; set; }
+        public long fee_amount { get; set; }
         public string transaction_id { get; set; }
-        public int payout_count { get; set; }
+        public long payout_count { get; set; }
         public string status { get; set; }
-        public int timestamp { get; set; }
+        public long timestamp { get; set; }
         public string coin { get; set; }
     }
 
-    public class FarmerPayoutBatcheDatum
+    public class FarmerPayoutBatchDatum
     {
         public string id { get; set; }
         public string type { get; set; }
-        public FarmerPayoutBatcheAttributes attributes { get; set; }
+        public FarmerPayoutBatchAttributes attributes { get; set; }
     }
 
-    public class FarmerPayoutBatcheLinks
+    public class FarmerPayoutBatchLinks
     {
         public int total_pages { get; set; }
         public object prev { get; set; }
@@ -138,8 +148,8 @@ namespace DataCollection.SpaceFarmers
 
     public class FarmerPayoutBatchesResponse
     {
-        public List<FarmerPayoutBatcheDatum> data { get; set; }
-        public FarmerPayoutBatcheLinks links { get; set; }
+        public List<FarmerPayoutBatchDatum> data { get; set; }
+        public FarmerPayoutBatchLinks links { get; set; }
     }
 
 

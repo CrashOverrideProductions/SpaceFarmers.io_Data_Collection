@@ -39,7 +39,7 @@ namespace DataCollection.SpaceFarmers
                     }
 
                     //Prepare SQLite Insert
-                    string sqlLine = "INSERT INTO FarmerDetails (id,type,points_24h,farmer_name,ratio_24h,tib_24h,current_effort,estimated_win_seconds,payout_threshold_mojos,collection_time_stamp)" +
+                    string sqlLine = "INSERT INTO FarmerStatus (id,type,points_24h,farmer_name,ratio_24h,tib_24h,current_effort,estimated_win_seconds,payout_threshold_mojos,collection_time_stamp)" +
                                                         "VALUES ('" + farmerDetailsResponse.data.id + "','" +
                                                                       farmerDetailsResponse.data.type + "','" +
                                                                       farmerDetailsResponse.data.attributes.points_24h + "','" +
@@ -81,8 +81,8 @@ namespace DataCollection.SpaceFarmers
         public double ratio_24h { get; set; }
         public double tib_24h { get; set; }
         public double current_effort { get; set; }
-        public int estimated_win_seconds { get; set; }
-        public int payout_threshold_mojos { get; set; }
+        public long estimated_win_seconds { get; set; }
+        public long payout_threshold_mojos { get; set; }
     }
 
     public class FarmerDetailsData

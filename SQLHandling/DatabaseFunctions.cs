@@ -21,9 +21,8 @@ namespace SQLHandling
         {
             try
             {
-                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
+                if (File.Exists(path))
                 {
-                    connection.Open();
                     return true;
                 }
             }
@@ -32,6 +31,8 @@ namespace SQLHandling
                 // Some form of error handling here
                 return false;
             }
+            return false;
+
         }
 
 
@@ -39,32 +40,48 @@ namespace SQLHandling
         {
             try
             {
-                // Create the file if it doesn't exist
                 if (!File.Exists(path))
                 {
-                    using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
-                    {
-                        connection.Open();
+                    Console.WriteLine($"Database file does not exist at {path}. Creating a new database file...");
 
-                        foreach (var sqlStatement in CreateSQLStatements())
+                    // Create the empty SQLite file
+                    SQLiteConnection.CreateFile(path);
+                }
+
+                else
+                {
+                    Console.WriteLine($"Database file already exists at {path}. Skipping file creation.");
+                }
+
+                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
+                {
+                    connection.Open();
+
+                    foreach (var sql in CreateSQLStatements())
+                    {
+                        Console.WriteLine($"Executing SQL: {sql.Split('\n')[0]}...");
+                        try
                         {
-                            using (var command = connection.CreateCommand())
+                            using (var command = new SQLiteCommand(sql, connection))
                             {
-                                command.CommandText = sqlStatement;
                                 command.ExecuteNonQuery();
+                                Console.WriteLine($"Executed successfully: {sql.Split('\n')[0]}...");
                             }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error executing SQL: {sql}\nException: {ex.Message}");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Some form of error handling here
-                int test = 0;
+                Console.WriteLine($"Error creating database: {ex.Message}");
             }
         }
 
-        public void InsertDataToDatabase(string path, List<string> sqlStatements)
+        public static void InsertDataToDatabase(string path, List<string> sqlStatements)
         {
             try
             {
@@ -76,15 +93,22 @@ namespace SQLHandling
                     {
                         foreach (var sqlStatement in sqlStatements)
                         {
-                            command.CommandText = sqlStatement;
-                            command.ExecuteNonQuery();
+                            try
+                            {
+                                command.CommandText = sqlStatement;
+                                command.ExecuteNonQuery();
+                            }
+                            catch(Exception ex)
+                            { 
+                                Console.WriteLine($"Error executing SQL statement: {sqlStatement}\nException: {ex.Message}");
+                            }
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Some form of error handling here
+                Console.WriteLine($"Error inserting data to database: {ex.Message}");
             }
         }
 
@@ -109,7 +133,7 @@ namespace SQLHandling
             sqlOutput.Add("CREATE TABLE FarmerBlocks (" +
                 "id                               INTEGER UNIQUE," +
                 "type                             TEXT," +
-                "height                           INTEGER," +                                 
+                "height                           INTEGER," +
                 "datetime                         TEXT," +
                 "amount                           INTEGER," +
                 "effort                           NUMERIC," +
@@ -168,6 +192,7 @@ namespace SQLHandling
                 "points                 INTEGER," +
                 "time_taken             INTEGER," +
                 "plot_id                TEXT," +
+                "launcher_id            TEXT," +
                 "collection_time_stamp  INTEGER);");
 
             sqlOutput.Add("CREATE TABLE FarmerPlots (" +
@@ -188,7 +213,7 @@ namespace SQLHandling
         }
 
         public long getLastUpdateFarmerBlocks(string path, string launch)
-        { 
+        {
             // Get the last update time for FarmerBlocks
             long lastUpdate = 0;
 
@@ -200,9 +225,8 @@ namespace SQLHandling
 
                     using (var command = connection.CreateCommand())
                     {
-                        command.CommandText = "SELECT MAX(datetime) FROM FarmerBlocks WHERE launcher_id = @launcher_id";
-                        command.Parameters.AddWithValue("@launcher_id", launch);
-
+                        command.CommandText = "SELECT MAX(timestamp) FROM FarmerBlocks WHERE launcher_id = '" + launch + "'";
+                        
                         var result = command.ExecuteScalar();
                         if (result != null && result != DBNull.Value)
                         {
@@ -213,7 +237,9 @@ namespace SQLHandling
             }
             catch (Exception ex)
             {
-                // Some form of error handling here
+                Console.WriteLine("Error. Unable to get Farmer Last Block Last Update");
+                Console.WriteLine("launcher: " + launch);
+                Console.WriteLine(ex.Message);
             }
 
             return lastUpdate;
@@ -232,8 +258,7 @@ namespace SQLHandling
 
                     using (var command = connection.CreateCommand())
                     {
-                        command.CommandText = "SELECT MAX(datetime) FROM FarmerPayouts WHERE launcher_id = @launcher_id";
-                        command.Parameters.AddWithValue("@launcher_id", launch);
+                        command.CommandText = "SELECT MAX(timestamp) FROM FarmerPayouts WHERE launcher_id = '" + launch + "'";
 
                         var result = command.ExecuteScalar();
                         if (result != null && result != DBNull.Value)
@@ -264,8 +289,7 @@ namespace SQLHandling
 
                     using (var command = connection.CreateCommand())
                     {
-                        command.CommandText = "SELECT MAX(datetime) FROM FarmerPayoutBatches WHERE launcher_id = @launcher_id";
-                        command.Parameters.AddWithValue("@launcher_id", launch);
+                        command.CommandText = "SELECT MAX(timestamp) FROM FarmerPayoutBatches WHERE launcher_id = '" + launch + "'";
 
                         var result = command.ExecuteScalar();
                         if (result != null && result != DBNull.Value)
@@ -296,8 +320,7 @@ namespace SQLHandling
 
                     using (var command = connection.CreateCommand())
                     {
-                        command.CommandText = "SELECT MAX(datetime) FROM FarmerPartials WHERE launcher_id = @launcher_id";
-                        command.Parameters.AddWithValue("@launcher_id", launch);
+                        command.CommandText = "SELECT MAX(timestamp) FROM FarmerPartials WHERE launcher_id = '" + launch + "'";
 
                         var result = command.ExecuteScalar();
                         if (result != null && result != DBNull.Value)
@@ -328,8 +351,7 @@ namespace SQLHandling
 
                     using (var command = connection.CreateCommand())
                     {
-                        command.CommandText = "SELECT MAX(datetime) FROM FarmerPlots WHERE launcher_id = @launcher_id";
-                        command.Parameters.AddWithValue("@launcher_id", launch);
+                        command.CommandText = "SELECT MAX(timestamp) FROM FarmerPlots WHERE launcher_id = '" + launch + "'";
 
                         var result = command.ExecuteScalar();
                         if (result != null && result != DBNull.Value)

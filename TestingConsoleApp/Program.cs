@@ -74,12 +74,12 @@ namespace TestingConsoleApp
             SQLHandling.Common.sqlLines.AddRange(farmerBlocks.getFarmerBlocks(launcherID).Result);
 
             // Get Farmer Payouts
-           // Console.WriteLine("Getting Farmer Payouts...");
-           // SQLHandling.Common.sqlLines.AddRange(farmerPayouts.getFarmerPayouts(launcherID).Result);
+            Console.WriteLine("Getting Farmer Payouts...");
+            SQLHandling.Common.sqlLines.AddRange(farmerPayouts.getFarmerPayouts(launcherID).Result);
 
             // Get Farmer Payout Batches
-          //  Console.WriteLine("Getting Farmer Payout Batches...");
-          //  SQLHandling.Common.sqlLines.AddRange(farmerPayoutBatches.getFarmerPayoutBatches(launcherID).Result);
+            Console.WriteLine("Getting Farmer Payout Batches...");
+            SQLHandling.Common.sqlLines.AddRange(farmerPayoutBatches.getFarmerPayoutBatches(launcherID).Result);
 
             // Get Farmer Partials
             Console.WriteLine("Getting Farmer Partials...");
@@ -91,17 +91,22 @@ namespace TestingConsoleApp
             SQLHandling.Common.sqlLines.AddRange(farmerPlots.getFarmerPlots(launcherID).Result);
 
 
+            // Get SQL Lines to Insert
+            Console.WriteLine("Getting SQL Lines to Insert...");
+            List<string> lines = new List<string>();
+
+            lines.AddRange(SQLHandling.Common.sqlLines);
+
+            // Remove any lines from sqlLines that exist in lines
+            SQLHandling.Common.sqlLines.RemoveAll(x => lines.Contains(x));
+
+            // Add Lines to SQL
+            Console.WriteLine("Adding SQL Lines to Database...");
+
+            DatabaseFunctions.InsertDataToDatabase(DatabaseFunctions.DataBasePath, lines);
 
 
-
-
-            // Write SQL to Console
-            Console.WriteLine("SQL Commands Generated...");
-            foreach (string line in SQLHandling.Common.sqlLines)
-            {
-                Console.WriteLine(line);
-            }
-
+            Console.WriteLine("End of Line");
 
             Console.ReadLine();
 
