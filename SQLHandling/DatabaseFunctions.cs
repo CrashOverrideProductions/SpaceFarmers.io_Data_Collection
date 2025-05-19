@@ -13,15 +13,15 @@ namespace SQLHandling
 {
     public class DatabaseFunctions
     {
-        internal static string DatabaseName = "FarmerData.db";
-        internal static string DatabaseFolder = AppDomain.CurrentDomain.BaseDirectory;
-        public static string DataBasePath = Path.Combine(DatabaseFolder, DatabaseName);
-
-        public static bool TestSQLConnection(string path)
+        public static bool TestSQLConnection(Settings.DatabaseSettings databaseSettings)
         {
+            string databasePath = databaseSettings.DatabasePath;
+            string databaseName = databaseSettings.DatabaseName;
+            string databaseFullPath = Path.Combine(databasePath, databaseName);
+
             try
             {
-                if (File.Exists(path))
+                if (File.Exists(databaseFullPath))
                 {
                     return true;
                 }
@@ -36,24 +36,28 @@ namespace SQLHandling
         }
 
 
-        public static void CreateDatabase(string path)
+        public static void CreateDatabase(Settings.DatabaseSettings databaseSettings)
         {
+            string databasePath = databaseSettings.DatabasePath;
+            string databaseName = databaseSettings.DatabaseName;
+            string databaseFullPath = Path.Combine(databasePath, databaseName);
+
             try
             {
-                if (!File.Exists(path))
+                if (!File.Exists(databaseFullPath))
                 {
-                    Console.WriteLine($"Database file does not exist at {path}. Creating a new database file...");
+                    Console.WriteLine($"Database file does not exist at {databaseFullPath}. Creating a new database file...");
 
                     // Create the empty SQLite file
-                    SQLiteConnection.CreateFile(path);
+                    SQLiteConnection.CreateFile(databaseFullPath);
                 }
 
                 else
                 {
-                    Console.WriteLine($"Database file already exists at {path}. Skipping file creation.");
+                    Console.WriteLine($"Database file already exists at {databaseFullPath}. Skipping file creation.");
                 }
 
-                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
+                using (var connection = new SQLiteConnection($"Data Source={databaseFullPath};Version=3;"))
                 {
                     connection.Open();
 
@@ -81,11 +85,15 @@ namespace SQLHandling
             }
         }
 
-        public static void InsertDataToDatabase(string path, List<string> sqlStatements)
+        public static void InsertDataToDatabase(Settings.DatabaseSettings databaseSettings, List<string> sqlStatements)
         {
+            string databasePath = databaseSettings.DatabasePath;
+            string databaseName = databaseSettings.DatabaseName;
+            string databaseFullPath = Path.Combine(databasePath, databaseName);
+
             try
             {
-                using (var connection = new SQLiteConnection($"Data Source={path};Version=3;"))
+                using (var connection = new SQLiteConnection($"Data Source={databaseFullPath};Version=3;"))
                 {
                     connection.Open();
 

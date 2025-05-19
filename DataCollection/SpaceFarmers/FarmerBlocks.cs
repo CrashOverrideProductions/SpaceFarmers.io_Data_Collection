@@ -9,6 +9,7 @@ using System.Text.Json;
 using Microsoft.SqlServer.Server;
 using SQLHandling;
 using System.Reflection;
+using System.IO;
 
 namespace DataCollection.SpaceFarmers
 {
@@ -18,22 +19,26 @@ namespace DataCollection.SpaceFarmers
 
 
         // Get API Data
-        public async Task<List<string>> getFarmerBlocks(List<string> launcherID)
+        public async Task<List<string>> getFarmerBlocks(Settings.ApplicationSettings appSettings)
         {
             // Define Return Object
             List<string> farmerBlocksList = new List<string>();
 
             long collectionTimeStamp = Common.ConvertToUnixEpoch(DateTime.UtcNow);
 
-            foreach (string launcher in launcherID)
+            foreach (string launcher in appSettings.Harvester.HarvesterIDs)
             {
+                // Database Path
+                string databasePath = Path.Combine(appSettings.Database.DatabasePath, appSettings.Database.DatabaseName);
+                
+
                 try
                 {
                     int counter = 0;
                     int totalpages = 0;
 
                     // Get Last Update TimeStamp
-                    long lastUpdateTimeStamp = sql.getLastUpdateFarmerBlocks(DatabaseFunctions.DataBasePath, launcher);
+                    long lastUpdateTimeStamp = sql.getLastUpdateFarmerBlocks(databasePath, launcher);
 
                     // Data Object
                     List<FarmerBlocksDatum> farmerBlocksResponse = new List<FarmerBlocksDatum>();

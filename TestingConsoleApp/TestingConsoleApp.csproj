@@ -93,16 +93,36 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <Content Include="php.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataCollection\DataCollection.csproj">
       <Project>{4c07ceb6-dcdb-4b48-a4b0-181c25fff3bd}</Project>
       <Name>DataCollection</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{783ee5e5-7374-45e9-acbb-8e1c016a5786}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Settings\Settings.csproj">
+      <Project>{49fc7be7-ddd6-4089-b633-807b9334b3c6}</Project>
+      <Name>Settings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SQLHandling\SQLHandling.csproj">
       <Project>{cc075014-f0c8-4f88-96ef-3938d20695d2}</Project>
       <Name>SQLHandling</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebServer\WebServer.csproj">
+      <Project>{fdb02e82-c253-4e8e-84e1-5ec9ef2655ae}</Project>
+      <Name>WebServer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="index.php">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

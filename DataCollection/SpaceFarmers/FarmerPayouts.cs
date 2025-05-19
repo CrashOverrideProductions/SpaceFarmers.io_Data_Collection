@@ -1,6 +1,7 @@
 ﻿using SQLHandling;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Numerics;
@@ -15,15 +16,19 @@ namespace DataCollection.SpaceFarmers
         SQLHandling.DatabaseFunctions sql = new SQLHandling.DatabaseFunctions();
 
         // Get API Data
-        public async Task<List<string>> getFarmerPayouts(List<string> launcherID)
+        public async Task<List<string>> getFarmerPayouts(Settings.ApplicationSettings appSettings)
         {
+            // Database Path
+            string databasePath = Path.Combine(appSettings.Database.DatabasePath, appSettings.Database.DatabaseName);
+
             // Define Return Object
             List<string> farmerBlocksList = new List<string>();
 
             long collectionTimeStamp = Common.ConvertToUnixEpoch(DateTime.UtcNow);
 
-            foreach (string launcher in launcherID)
+            foreach (string launcher in appSettings.Harvester.HarvesterIDs)
             {
+                
                 try
                 {
                     int counter = 0;
@@ -31,7 +36,7 @@ namespace DataCollection.SpaceFarmers
                     int payoutid = 0;
 
                     // Get Last Update TimeStamp
-                    long lastUpdateTimeStamp = sql.getLastUpdateFarmerPayouts(DatabaseFunctions.DataBasePath, launcher);
+                    long lastUpdateTimeStamp = sql.getLastUpdateFarmerPayouts(databasePath, launcher);
 
                     // Data Object
                     List<FarmerPayoutDatum> farmerBlocksResponse = new List<FarmerPayoutDatum>();

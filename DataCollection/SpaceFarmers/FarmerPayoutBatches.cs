@@ -1,6 +1,7 @@
 ﻿using SQLHandling;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Numerics;
@@ -15,14 +16,16 @@ namespace DataCollection.SpaceFarmers
         SQLHandling.DatabaseFunctions sql = new SQLHandling.DatabaseFunctions();
 
         // Get API Data
-        public async Task<List<string>> getFarmerPayoutBatches(List<string> launcherID)
+        public async Task<List<string>> getFarmerPayoutBatches(Settings.ApplicationSettings appSettings)
         {
+            string databasePath = Path.Combine(appSettings.Database.DatabasePath, appSettings.Database.DatabaseName);
+
             // Define Return Object
             List<string> farmerPayoutBatchList = new List<string>();
 
             long collectionTimeStamp = Common.ConvertToUnixEpoch(DateTime.UtcNow);
 
-            foreach (string launcher in launcherID)
+            foreach (string launcher in appSettings.Harvester.HarvesterIDs)
             {
                 try
                 {
@@ -33,7 +36,7 @@ namespace DataCollection.SpaceFarmers
                     List<FarmerPayoutBatchDatum> farmerPayoutBatchesResponse = new List<FarmerPayoutBatchDatum>();
 
                     // Get Last Update TimeStamp
-                    long lastUpdateTimeStamp = sql.getLastUpdateFarmerPayoutBatch(DatabaseFunctions.DataBasePath, launcher);
+                    long lastUpdateTimeStamp = sql.getLastUpdateFarmerPayoutBatch(databasePath, launcher);
 
                     // Make API Call
                     string nextUrl = $"https://spacefarmers.io/api/farmers/{launcher}/payout_batches";

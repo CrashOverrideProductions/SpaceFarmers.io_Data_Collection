@@ -46,11 +46,5 @@
     <Compile Include="Logging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Pushover\Pushover.csproj">
-      <Project>{d80106d2-4ff9-417a-b6ae-b7160835af3c}</Project>
-      <Name>Pushover</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,7 @@
 ﻿using SQLHandling;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Numerics;
@@ -17,14 +18,16 @@ namespace DataCollection.SpaceFarmers
 
 
         // Get API Data
-        public async Task<List<string>> getFarmerPartials(List<string> launcherID)
+        public async Task<List<string>> getFarmerPartials(Settings.ApplicationSettings appSettings)
         {
+            string databasePath = Path.Combine(appSettings.Database.DatabasePath, appSettings.Database.DatabaseName);
+
             // Define Return Object
             List<string> farmerpartialsList = new List<string>();
 
             long collectionTimeStamp = Common.ConvertToUnixEpoch(DateTime.UtcNow);
 
-            foreach (string launcher in launcherID)
+            foreach (string launcher in appSettings.Harvester.HarvesterIDs)
             {
                 try
                 {
@@ -32,7 +35,7 @@ namespace DataCollection.SpaceFarmers
                     int totalpages = 0;
 
                     // Get Last Update TimeStamp
-                    long lastUpdateTimeStamp = sql.getLastUpdateFarmerPartials(DatabaseFunctions.DataBasePath, launcher);
+                    long lastUpdateTimeStamp = sql.getLastUpdateFarmerPartials(databasePath, launcher);
                    
                     // Data Object
                     List<FarmerPartialsDatum> farmerPartialsResponse = new List<FarmerPartialsDatum>();
