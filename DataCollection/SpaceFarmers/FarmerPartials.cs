@@ -20,6 +20,14 @@ namespace DataCollection.SpaceFarmers
         // Get API Data
         public async Task<List<string>> getFarmerPartials(Settings.ApplicationSettings appSettings)
         {
+            while (Common.IsAPICallActive) // Wait until the API call is not active
+            {
+                Console.WriteLine("FarmerPartials: An API Call is already active, waiting for it to finish before making a new call.");
+                await Task.Delay(10000); // Wait for 10 seconds before checking again
+            }
+
+            Common.IsAPICallActive = true; // Set the API call as active
+
             string databasePath = Path.Combine(appSettings.Database.DatabasePath, appSettings.Database.DatabaseName);
 
             // Define Return Object
@@ -56,7 +64,7 @@ namespace DataCollection.SpaceFarmers
                             if (pageData?.data != null)
                                 farmerPartialsResponse.AddRange(pageData.data);
 
-                            Console.WriteLine("Farmer Partials Data, Page " + counter + " of " + totalpages);
+                            Console.WriteLine("Partials Data, Page " + counter + " of " + totalpages);
 
                             totalpages = pageData?.links?.total_pages ?? 0;
                             counter++;
@@ -82,6 +90,9 @@ namespace DataCollection.SpaceFarmers
                             }
                         }
                     }
+
+                    // Set API Call Flag to False
+                    Common.IsAPICallActive = false;
 
                     foreach (var partial in farmerPartialsResponse)
                     {
@@ -115,6 +126,8 @@ namespace DataCollection.SpaceFarmers
                     // Temp for testing
                     Console.WriteLine("Error Retreiving Farmer Partials Batches: " + launcher);
                     Console.WriteLine("Error Details: " + ex.Message);
+
+                    Common.IsAPICallActive = false; // Reset the API call status
 
                     // Add to LogFile
 

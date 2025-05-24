@@ -9,6 +9,7 @@ namespace DataCollection
 {
     public class Common
     {
+        public static bool IsAPICallActive = false;
 
         public static long ConvertToUnixEpoch (DateTime dateTime)
         {

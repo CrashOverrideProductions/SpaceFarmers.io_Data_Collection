@@ -12,6 +12,14 @@ namespace DataCollection.SpaceFarmers
         // Get API Data
         public async Task<List<string>> getFarmerDetails(List<string> launcherID)
         {
+            while (Common.IsAPICallActive) // Wait until the API call is not active
+            {
+                Console.WriteLine("FarmerDetails: An API Call is already active, waiting for it to finish before making a new call.");
+                await Task.Delay(10000); // Wait for 10 seconds before checking again
+            }
+
+            Common.IsAPICallActive = true; // Set the API call as active
+
             // Define Return Object
             List<string> farmerDetailsList = new List<string>();
             
@@ -38,6 +46,8 @@ namespace DataCollection.SpaceFarmers
                         farmerDetailsResponse = JsonSerializer.Deserialize<FarmerDetailsResponse>(jsonString);
                     }
 
+                    Common.IsAPICallActive = false; // Set the API call as inactive
+
                     //Prepare SQLite Insert
                     string sqlLine = "INSERT INTO FarmerStatus (id,type,points_24h,farmer_name,ratio_24h,tib_24h,current_effort,estimated_win_seconds,payout_threshold_mojos,collection_time_stamp)" +
                                                         "VALUES ('" + farmerDetailsResponse.data.id + "','" +
@@ -60,6 +70,7 @@ namespace DataCollection.SpaceFarmers
                     Console.WriteLine("Error Retreiving Farmer Details: ");
                     Console.WriteLine("Launcher ID: " + launcher);
                     Console.WriteLine("Error Details: " + ex.Message);
+                    Common.IsAPICallActive = false; // Set the API call as inactive
 
                     // Add to LogFile
 

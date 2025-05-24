@@ -18,6 +18,15 @@ namespace DataCollection.SpaceFarmers
         // Get API Data
         public async Task<List<string>> getFarmerPayouts(Settings.ApplicationSettings appSettings)
         {
+            while (Common.IsAPICallActive) // Wait until the API call is not active
+            {
+                Console.WriteLine("FarmerPayouts: An API Call is already active, waiting for it to finish before making a new call.");
+                await Task.Delay(10000); // Wait for 10 seconds before checking again
+            }
+
+            Common.IsAPICallActive = true; // Set the API call as active
+
+
             // Database Path
             string databasePath = Path.Combine(appSettings.Database.DatabasePath, appSettings.Database.DatabaseName);
 
@@ -66,7 +75,7 @@ namespace DataCollection.SpaceFarmers
 
                                 nextUrl = pageData?.links?.next;
 
-                                Console.WriteLine("Page: " + counter + " of " + totalpages);
+                                Console.WriteLine("Payouts Page: " + counter + " of " + totalpages);
                                 // END Testing
 
                                 // Minor delay to avoid hitting the API too fast and upsetting SpaceFarmers Dev Team
@@ -103,6 +112,8 @@ namespace DataCollection.SpaceFarmers
                         }
                     }
 
+                    Common.IsAPICallActive = false; // Set the API call as inactive
+
                     foreach (var payout in farmerBlocksResponse)
                     {
                         // Prepare SQLite Insert
@@ -135,6 +146,9 @@ namespace DataCollection.SpaceFarmers
                     // Temp for testing
                     Console.WriteLine("Error Retreiving Launcher Payouts: " + launcher);
                     Console.WriteLine("Error Details: " + ex.Message);
+
+                    Common.IsAPICallActive = false; // Set the API call as inactive
+
 
                     // Add to LogFile
 

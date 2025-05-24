@@ -15,6 +15,15 @@ namespace DataCollection.SpaceFarmers
         // Get API Data
         public async Task<List<string>> getFarmerPlots(List<string> launcherID)
         {
+            while (Common.IsAPICallActive) // Wait until the API call is not active
+            {
+                Console.WriteLine("FarmerPlots: An API Call is already active, waiting for it to finish before making a new call.");
+                await Task.Delay(10000); // Wait for 10 seconds before checking again
+            }
+
+            Common.IsAPICallActive = true; // Set the API call as active
+
+
             // Define Return Object
             List<string> farmerplotsList = new List<string>();
 
@@ -30,6 +39,10 @@ namespace DataCollection.SpaceFarmers
                     // Make API Call
                     string nextUrl = $"https://spacefarmers.io/api/farmers/{launcher}/plots";
 
+                    // Counter
+                    int counter = 0;
+                    int totalpages = 0;
+
                     using (var client = new HttpClient())
                     {
                         while (!string.IsNullOrEmpty(nextUrl))
@@ -43,10 +56,16 @@ namespace DataCollection.SpaceFarmers
                             if (pageData?.data != null)
                                 farmerPlotResponse.AddRange(pageData.data);
 
-                            nextUrl = pageData?.links?.next;
+                            totalpages = pageData?.links?.total_pages ?? 0;
+                            counter++;
 
+                            Console.WriteLine("Plots Page: " + counter + " of " + totalpages);
+
+                            nextUrl = pageData?.links?.next;
                         }
                     }
+
+                    Common.IsAPICallActive = false; // Set the API call as inactive
 
                     foreach (var plot in farmerPlotResponse)
                     {
@@ -76,6 +95,8 @@ namespace DataCollection.SpaceFarmers
                     // Temp for testing
                     Console.WriteLine("Error Retreiving Launcher Payout Batches: " + launcher);
                     Console.WriteLine("Error Details: " + ex.Message);
+
+                    Common.IsAPICallActive = false; // Set the API call as inactive
 
                     // Add to LogFile
 

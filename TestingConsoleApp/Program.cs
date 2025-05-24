@@ -428,10 +428,10 @@ namespace TestingConsoleApp
 
             Console.WriteLine("Starting Background Workers...");
 
-            //farmerDetailsBGWorker.RunWorkerAsync(appSettings);
-            //farmerBlocksBGWorker.RunWorkerAsync(appSettings);
-            //farmerPayoutsBGWorker.RunWorkerAsync(appSettings);
-            //farmerPayoutBatchesBGWorker.RunWorkerAsync(appSettings);
+            farmerDetailsBGWorker.RunWorkerAsync(appSettings);
+            farmerBlocksBGWorker.RunWorkerAsync(appSettings);
+            farmerPayoutsBGWorker.RunWorkerAsync(appSettings);
+            farmerPayoutBatchesBGWorker.RunWorkerAsync(appSettings);
             farmerPartialsBGWorker.RunWorkerAsync(appSettings);
             farmerPlotsBGWorker.RunWorkerAsync(appSettings);
             sqlBGWorker.RunWorkerAsync(appSettings);

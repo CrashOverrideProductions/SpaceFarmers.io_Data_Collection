@@ -21,6 +21,14 @@ namespace DataCollection.SpaceFarmers
         // Get API Data
         public async Task<List<string>> getFarmerBlocks(Settings.ApplicationSettings appSettings)
         {
+            while (Common.IsAPICallActive) // Wait until the API call is not active
+            {
+                Console.WriteLine("FarmerBlocks: An API Call is already active, waiting for it to finish before making a new call.");
+                await Task.Delay(10000); // Wait for 10 seconds before checking again
+            }
+            
+            Common.IsAPICallActive = true; // Set the API call as active
+
             // Define Return Object
             List<string> farmerBlocksList = new List<string>();
 
@@ -87,6 +95,9 @@ namespace DataCollection.SpaceFarmers
                         }
                     }
 
+                    // Set API Call as not active
+                    Common.IsAPICallActive = false;
+
                     foreach (var block in farmerBlocksResponse)
                     {
                         // Prepare SQLite Insert
@@ -118,6 +129,7 @@ namespace DataCollection.SpaceFarmers
                     // Temp for testing
                     Console.WriteLine("Error Retreiving Farmer Blocks: " + launcher);
                     Console.WriteLine("Error Details: " + ex.Message);
+                    Common.IsAPICallActive = false; // Set API Call Flag to False
 
                     // Add to LogFile
 
