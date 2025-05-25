@@ -46,15 +46,15 @@ namespace SQLHandling
             {
                 if (!File.Exists(databaseFullPath))
                 {
-                    Console.WriteLine($"Database file does not exist at {databaseFullPath}. Creating a new database file...");
-
+                    Logging.Common.AddLogItem($"Database file does not exist at {databaseFullPath}. Creating a new database file...", "Info", "DatabaseFunctions.CreateDatabase");
+                    
                     // Create the empty SQLite file
                     SQLiteConnection.CreateFile(databaseFullPath);
                 }
 
                 else
                 {
-                    Console.WriteLine($"Database file already exists at {databaseFullPath}. Skipping file creation.");
+                    Logging.Common.AddLogItem($"Database file already exists at {databaseFullPath}. Skipping file creation...", "Info", "DatabaseFunctions.CreateDatabase");
                 }
 
                 using (var connection = new SQLiteConnection($"Data Source={databaseFullPath};Version=3;"))
@@ -63,25 +63,31 @@ namespace SQLHandling
 
                     foreach (var sql in CreateSQLStatements())
                     {
-                        Console.WriteLine($"Executing SQL: {sql.Split('\n')[0]}...");
+                        // Log the SQL statement being executed
+                        Logging.Common.AddLogItem($"Executing SQL: {sql.Split('\n')[0]}...", "Info", "DatabaseFunctions.CreateDatabase");
+                        
                         try
                         {
                             using (var command = new SQLiteCommand(sql, connection))
                             {
                                 command.ExecuteNonQuery();
-                                Console.WriteLine($"Executed successfully: {sql.Split('\n')[0]}...");
+                                // Log successful execution
+                                Logging.Common.AddLogItem($"Executed successfully: {sql.Split('\n')[0]}...", "Info", "DatabaseFunctions.CreateDatabase");
                             }
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine($"Error executing SQL: {sql}\nException: {ex.Message}");
+                            // Log the error with the SQL statement
+                            Logging.Common.AddLogItem($"Error executing SQL: {sql.Split('\n')[0]}\nException: {ex.Message}", "Error", "DatabaseFunctions.CreateDatabase");
+
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error creating database: {ex.Message}");
+                // Log the error with the database creation
+                Logging.Common.AddLogItem($"Error creating database: {ex.Message}", "Error", "DatabaseFunctions.CreateDatabase");
             }
         }
 
@@ -108,7 +114,8 @@ namespace SQLHandling
                             }
                             catch(Exception ex)
                             { 
-                                Console.WriteLine($"Error executing SQL statement: {sqlStatement}\nException: {ex.Message}");
+                                // Log the error with the SQL statement
+                                Logging.Common.AddLogItem($"Error executing SQL statement: {sqlStatement}\nException: {ex.Message}", "Error", "DatabaseFunctions.InsertDataToDatabase");
                             }
                         }
                     }
@@ -116,7 +123,8 @@ namespace SQLHandling
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error inserting data to database: {ex.Message}");
+                // Log the error with the database insertion
+                Logging.Common.AddLogItem($"Error inserting data to database: {ex.Message}", "Error", "DatabaseFunctions.InsertDataToDatabase");
             }
         }
 
@@ -245,9 +253,9 @@ namespace SQLHandling
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error. Unable to get Farmer Last Block Last Update");
-                Console.WriteLine("launcher: " + launch);
-                Console.WriteLine(ex.Message);
+                Logging.Common.AddLogItem("Error. Unable to get Farmer Last Block Last Update", "Error", "DatabaseFunctions.getLastUpdateFarmerBlocks");
+                Logging.Common.AddLogItem("launcher: " + launch, "Error", "DatabaseFunctions.getLastUpdateFarmerBlocks");
+                Logging.Common.AddLogItem(ex.Message, "Error", "DatabaseFunctions.getLastUpdateFarmerBlocks");
             }
 
             return lastUpdate;

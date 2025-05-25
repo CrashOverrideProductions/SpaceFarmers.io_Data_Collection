@@ -20,7 +20,7 @@ namespace DataCollection.SpaceFarmers
         {
             while (Common.IsAPICallActive) // Wait until the API call is not active
             {
-                Console.WriteLine("FarmerPayouts: An API Call is already active, waiting for it to finish before making a new call.");
+                Logging.Common.AddLogItem("FarmerPayouts: An API Call is already active, waiting for it to finish before making a new call.", "Info", "FarmerBlocks");
                 await Task.Delay(10000); // Wait for 10 seconds before checking again
             }
 
@@ -68,15 +68,13 @@ namespace DataCollection.SpaceFarmers
                                 if (pageData?.data != null)
                                     farmerBlocksResponse.AddRange(pageData.data);
 
-                                // Testing
                                 payoutid = pageData?.data?.Count > 0 ? pageData.data.Max(x => int.Parse(x.id)) : 0;
                                 totalpages = pageData?.links?.total_pages ?? 0;
                                 counter++;
 
                                 nextUrl = pageData?.links?.next;
 
-                                Console.WriteLine("Payouts Page: " + counter + " of " + totalpages);
-                                // END Testing
+                                Logging.Common.AddLogItem("Retrieved " + (pageData?.data?.Count ?? 0) + " payouts from API for launcher: " + launcher, "Info", "FarmerPayouts");
 
                                 // Minor delay to avoid hitting the API too fast and upsetting SpaceFarmers Dev Team
                                 System.Threading.Thread.Sleep(125);
@@ -88,7 +86,7 @@ namespace DataCollection.SpaceFarmers
                                     {
                                         if (payout.attributes.timestamp < lastUpdateTimeStamp)
                                         {
-                                            Console.WriteLine("Farmer Payout data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages);
+                                            Logging.Common.AddLogItem("Farmer Payout data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages, "Info", "FarmerPayouts");
 
                                             nextUrl = null;
                                             break;
@@ -103,10 +101,7 @@ namespace DataCollection.SpaceFarmers
                             catch (Exception ex)
                             {
                                 nextUrl = null; // Set to null to exit loop
-                                Console.WriteLine("");
-                                Console.WriteLine("PayoutID: " + payoutid);
-                                Console.WriteLine("Page: " + counter);
-                                Console.WriteLine("Error Retreiving Farmer Payouts: " + ex.Message);
+                                Logging.Common.AddLogItem("Error retrieving farmer payouts for launcher: " + launcher + " - " + ex.Message, "Error", "FarmerPayouts");
 
                             }
                         }
@@ -144,8 +139,8 @@ namespace DataCollection.SpaceFarmers
                 catch (Exception ex)
                 {
                     // Temp for testing
-                    Console.WriteLine("Error Retreiving Launcher Payouts: " + launcher);
-                    Console.WriteLine("Error Details: " + ex.Message);
+                    Logging.Common.AddLogItem("Error Retreiving Launcher Payouts: " + launcher, "Error", "FarmerBlocks");
+                    Logging.Common.AddLogItem("Error Details: " + ex.Message, "Error", "FarmerBlocks");
 
                     Common.IsAPICallActive = false; // Set the API call as inactive
 

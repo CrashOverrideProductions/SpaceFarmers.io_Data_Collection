@@ -28,3 +28,5 @@ C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\bin\Debug\System.Buffers.xml
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\obj\Debug\WebServer.csproj.Up2Date
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\bin\Debug\Logging.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\WebServer\bin\Debug\Logging.pdb

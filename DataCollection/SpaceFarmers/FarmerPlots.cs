@@ -17,7 +17,7 @@ namespace DataCollection.SpaceFarmers
         {
             while (Common.IsAPICallActive) // Wait until the API call is not active
             {
-                Console.WriteLine("FarmerPlots: An API Call is already active, waiting for it to finish before making a new call.");
+                Logging.Common.AddLogItem("FarmerPlots: An API Call is already active, waiting for it to finish before making a new call.", "Info", "FarmerPlots");
                 await Task.Delay(10000); // Wait for 10 seconds before checking again
             }
 
@@ -59,7 +59,7 @@ namespace DataCollection.SpaceFarmers
                             totalpages = pageData?.links?.total_pages ?? 0;
                             counter++;
 
-                            Console.WriteLine("Plots Page: " + counter + " of " + totalpages);
+                            Logging.Common.AddLogItem("Retrieved " + (pageData?.data?.Count ?? 0) + " plots from API for launcher: " + launcher, "Info", "FarmerPlots");
 
                             nextUrl = pageData?.links?.next;
                         }
@@ -92,9 +92,8 @@ namespace DataCollection.SpaceFarmers
                 }
                 catch (Exception ex)
                 {
-                    // Temp for testing
-                    Console.WriteLine("Error Retreiving Launcher Payout Batches: " + launcher);
-                    Console.WriteLine("Error Details: " + ex.Message);
+                    // Log the error
+                    Logging.Common.AddLogItem("Error Retrieving Farmer Plots for Launcher: " + launcher + " - " + ex.Message, "Error", "FarmerPlots");
 
                     Common.IsAPICallActive = false; // Set the API call as inactive
 

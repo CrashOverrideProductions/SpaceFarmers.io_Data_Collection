@@ -1,0 +1,66 @@
+2025-05-25 09:30:04 [Info] Program.Main: Starting Logging Background Worker
+2025-05-25 09:30:06 [Info] Program.Main: Inital Startup
+2025-05-25 09:30:19 [Info] Program.Main: Testing SQL Connection
+2025-05-25 09:30:21 [Info] Program.Main: SQL Connection Successful
+2025-05-25 09:30:21 [Info] Program.Main: Checking for Harvester IDs
+2025-05-25 09:30:21 [Info] Program.Main: Harvester IDs found in appsettings.json
+2025-05-25 09:30:21 [Info] Program.Main: Harvester ID: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:30:21 [Info] Program.Main: Starting WebServer
+2025-05-25 09:30:21 [Info] Program.Main: Starting Background Workers
+2025-05-25 09:30:21 [Info] Program.Main: Logging Background Worker Started
+2025-05-25 09:30:21 [Info] Program.Main: Background Workers Started
+2025-05-25 09:30:21 [Info] FarmerBlocks: FarmerPayoutBatches: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:21 [Info] FarmerPlots: FarmerPlots: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:21 [Info] FarmerBlocks: FarmerPartials: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:21 [Info] FarmerBlocks: FarmerPayouts: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:21 [Info] FarmerBlocks: FarmerDetails: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:23 [Info] FarmerBlocks: Retrieved 8 blocks from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:30:23 [Info] FarmerBlocks: Farmer Blocks Data is older than last update timestamp, stopping API calls at page 1 of 1
+2025-05-25 09:30:31 [Info] FarmerBlocks: FarmerPayouts: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:31 [Info] FarmerBlocks: FarmerPartials: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:31 [Info] FarmerPlots: FarmerPlots: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:31 [Info] FarmerBlocks: FarmerPayoutBatches: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:41 [Info] FarmerPlots: FarmerPlots: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:41 [Info] FarmerBlocks: FarmerPartials: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:41 [Info] FarmerBlocks: FarmerPayouts: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:41 [Info] FarmerPayoutBatches: Farmer Payout Batches Data, Page 0 of 43
+2025-05-25 09:30:41 [Info] FarmerPayoutBatches: Farmer Payout Batches Data is older than last update timestamp, stopping API calls at page 1 of 43
+2025-05-25 09:30:51 [Info] FarmerBlocks: FarmerPartials: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:51 [Info] FarmerPlots: FarmerPlots: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:30:53 [Info] FarmerPayouts: Retrieved 50 payouts from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:30:53 [Info] FarmerPayouts: Farmer Payout data is older than last update timestamp, stopping API calls at page 1 of 3475
+2025-05-25 09:31:01 [Info] FarmerBlocks: FarmerPartials: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:31:02 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:03 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:03 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:03 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:04 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:04 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:05 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:05 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:05 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:06 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:06 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:07 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:07 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:07 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:08 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:08 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:09 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:09 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:09 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:10 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:10 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:11 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:11 [Info] FarmerBlocks: FarmerPartials: An API Call is already active, waiting for it to finish before making a new call.
+2025-05-25 09:31:11 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:11 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:12 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:12 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:13 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:13 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:13 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:14 [Info] FarmerPlots: Retrieved 50 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:14 [Info] FarmerPlots: Retrieved 10 plots from API for launcher: 0a6b93e2a21bb611c252f6129c45cd1b5f354bb9676d38b15e5c9e9a990616c3
+2025-05-25 09:31:22 [Info] FarmerPartials: Farmer Partials Data, Page 0 of 34
+2025-05-25 09:31:22 [Info] FarmerPartials: Farmer Partials Data is older than last update timestamp, stopping API calls at page 1 of 34

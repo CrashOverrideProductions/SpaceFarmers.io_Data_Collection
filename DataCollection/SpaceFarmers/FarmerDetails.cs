@@ -14,7 +14,7 @@ namespace DataCollection.SpaceFarmers
         {
             while (Common.IsAPICallActive) // Wait until the API call is not active
             {
-                Console.WriteLine("FarmerDetails: An API Call is already active, waiting for it to finish before making a new call.");
+                Logging.Common.AddLogItem("FarmerDetails: An API Call is already active, waiting for it to finish before making a new call.", "Info", "FarmerBlocks");
                 await Task.Delay(10000); // Wait for 10 seconds before checking again
             }
 
@@ -67,9 +67,7 @@ namespace DataCollection.SpaceFarmers
                 catch (Exception ex)
                 {
                     // Temp for testing
-                    Console.WriteLine("Error Retreiving Farmer Details: ");
-                    Console.WriteLine("Launcher ID: " + launcher);
-                    Console.WriteLine("Error Details: " + ex.Message);
+                    Logging.Common.AddLogItem("Error Retrieving Farmer Details for Launcher: " + launcher + " - " + ex.Message, "Error", "FarmerDetails");
                     Common.IsAPICallActive = false; // Set the API call as inactive
 
                     // Add to LogFile

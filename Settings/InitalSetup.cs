@@ -46,7 +46,8 @@ namespace Settings
                 }
                 else
                 {
-                    Console.WriteLine("index.php file not found in the current directory.");
+                    // Log error if index.php file does not exist
+                    Logging.Common.AddLogItem("index.php file not found in the current directory.", "Error", "InitalSetup");
                 }
             }
         }
@@ -65,7 +66,7 @@ namespace Settings
                 }
                 else
                 {
-                    Console.WriteLine("php.zip file not found in the current directory.");
+                    Logging.Common.AddLogItem("php.zip file not found in the current directory.", "Error", "InitalSetup");
                 }
             }
         }

@@ -9,15 +9,6 @@ namespace SQLHandling
     public class Common
     {
         public static List<string> sqlLines = new List<string>();
-
-       
-
-        public void WriteSQLConsole()
-        {
-            foreach (string line in sqlLines)
-            {
-                Console.WriteLine(line);
-            }
-        }   
+                     
     }
 }

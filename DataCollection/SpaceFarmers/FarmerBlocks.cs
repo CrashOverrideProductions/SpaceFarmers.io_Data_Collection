@@ -23,7 +23,8 @@ namespace DataCollection.SpaceFarmers
         {
             while (Common.IsAPICallActive) // Wait until the API call is not active
             {
-                Console.WriteLine("FarmerBlocks: An API Call is already active, waiting for it to finish before making a new call.");
+                // Log that we are waiting for the API call to finish
+                Logging.Common.AddLogItem("FarmerBlocks: An API Call is already active, waiting for it to finish before making a new call.", "Info", "FarmerBlocks");
                 await Task.Delay(10000); // Wait for 10 seconds before checking again
             }
             
@@ -67,7 +68,7 @@ namespace DataCollection.SpaceFarmers
                             if (pageData?.data != null)
                                 farmerBlocksResponse.AddRange(pageData.data);
 
-                            Console.WriteLine("Farmer Blocks Data, Page " + counter + " of " + totalpages);
+                            Logging.Common.AddLogItem("Retrieved " + (pageData?.data?.Count ?? 0) + " blocks from API for launcher: " + launcher, "Info", "FarmerBlocks");
 
                             totalpages = pageData?.links?.total_pages ?? 0;
                             counter++;
@@ -81,7 +82,8 @@ namespace DataCollection.SpaceFarmers
                                 {
                                     if (block.attributes.timestamp < lastUpdateTimeStamp)
                                     {
-                                        Console.WriteLine("Farmer Blocks Data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages);
+                                        // If any block's timestamp is older than the last update timestamp, stop further API calls
+                                        Logging.Common.AddLogItem("Farmer Blocks Data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages, "Info", "FarmerBlocks");
                                         nextUrl = null;
                                         break;
                                     }
@@ -127,8 +129,8 @@ namespace DataCollection.SpaceFarmers
                 catch (Exception ex)
                 {
                     // Temp for testing
-                    Console.WriteLine("Error Retreiving Farmer Blocks: " + launcher);
-                    Console.WriteLine("Error Details: " + ex.Message);
+                    Logging.Common.AddLogItem("Error Retreiving Farmer Blocks: " + launcher, "Error", "FarmerBlocks");
+                    Logging.Common.AddLogItem("Error Details: " + ex.Message, "Error", "FarmerBlocks");
                     Common.IsAPICallActive = false; // Set API Call Flag to False
 
                     // Add to LogFile

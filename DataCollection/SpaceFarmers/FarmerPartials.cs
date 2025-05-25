@@ -22,7 +22,7 @@ namespace DataCollection.SpaceFarmers
         {
             while (Common.IsAPICallActive) // Wait until the API call is not active
             {
-                Console.WriteLine("FarmerPartials: An API Call is already active, waiting for it to finish before making a new call.");
+                Logging.Common.AddLogItem("FarmerPartials: An API Call is already active, waiting for it to finish before making a new call.", "Info", "FarmerBlocks");
                 await Task.Delay(10000); // Wait for 10 seconds before checking again
             }
 
@@ -64,7 +64,7 @@ namespace DataCollection.SpaceFarmers
                             if (pageData?.data != null)
                                 farmerPartialsResponse.AddRange(pageData.data);
 
-                            Console.WriteLine("Partials Data, Page " + counter + " of " + totalpages);
+                            Logging.Common.AddLogItem("Farmer Partials Data, Page " + counter + " of " + (pageData?.links?.total_pages ?? 0), "Info", "FarmerPartials");
 
                             totalpages = pageData?.links?.total_pages ?? 0;
                             counter++;
@@ -78,7 +78,8 @@ namespace DataCollection.SpaceFarmers
                                 {
                                     if (partial.attributes.timestamp < lastUpdateTimeStamp)
                                     {
-                                        Console.WriteLine("Farmer Partials Data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages);
+                                        // Log that the data is older than the last update timestamp
+                                        Logging.Common.AddLogItem("Farmer Partials Data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages, "Info", "FarmerPartials");
                                         nextUrl = null;
                                         break;
                                     }
@@ -124,8 +125,8 @@ namespace DataCollection.SpaceFarmers
                 catch (Exception ex)
                 {
                     // Temp for testing
-                    Console.WriteLine("Error Retreiving Farmer Partials Batches: " + launcher);
-                    Console.WriteLine("Error Details: " + ex.Message);
+                    Logging.Common.AddLogItem("Error Retreiving Farmer Partials Batches: " + launcher, "Error", "FarmerBlocks");
+                    Logging.Common.AddLogItem("Error Details: " + ex.Message, "Error", "FarmerBlocks");
 
                     Common.IsAPICallActive = false; // Reset the API call status
 

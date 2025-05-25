@@ -34,7 +34,7 @@ namespace Settings
                 // Logging Settings
                 applicationSettings.Logging = new LoggingSettings
                 {
-                    LoggingEnabled = "true",
+                    LoggingEnabled = true,
                     LogFilePath = LogFilePath
                 };
 
@@ -125,7 +125,7 @@ namespace Settings
 
     public class LoggingSettings
     {
-        public string LoggingEnabled { get; set; }
+        public bool LoggingEnabled { get; set; }
         public string LogFilePath { get; set; }
     }
 

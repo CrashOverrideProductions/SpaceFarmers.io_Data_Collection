@@ -83,5 +83,11 @@
     <None Include="packages.config" />
     <None Include="settings.ini" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{783ee5e5-7374-45e9-acbb-8e1c016a5786}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -33,3 +33,5 @@ C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\SQLHandlin
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\SQLHandling\bin\Debug\System.ValueTuple.xml
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\SQLHandling\bin\Debug\System.Text.Encodings.Web.xml
 C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\SQLHandling\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\SQLHandling\bin\Debug\Logging.dll
+C:\Users\JustinBland\Documents\GitHub\SpaceFarmers.io_Data_Collection\SQLHandling\bin\Debug\Logging.pdb

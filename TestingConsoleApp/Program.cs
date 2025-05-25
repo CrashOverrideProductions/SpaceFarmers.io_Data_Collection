@@ -32,55 +32,87 @@ namespace TestingConsoleApp
 
         // SQL 
         public static SQLHandling.Common sQLHandling = new SQLHandling.Common();
-        
+
+        public static void StopService() 
+        {
+            // Log the stopping of the service
+            Logging.Common.AddLogItem("Stopping Service", "Info", "Program.StopService");
+
+            // Check the data collection background workers and cancel them
+            
+            // Check the SQL background worker and cancel it
+
+            // Check the logging background worker and cancel it
+
+            // Actually Stop the Service
+
+        }
 
         static void Main(string[] args)
         {
-
             // Statup Routine
 
             // Get Application Settings
-            Console.WriteLine("Inital Startup...");
+            Logging.Common.AddLogItem("Inital Startup", "Info", "Program.Main");
 
             Settings.Common settings = new Settings.Common();
             appSettings = Settings.Common.getApplicationSettings();
 
-            // Test SQL Connection
-            Console.WriteLine("Testing SQL Connection...");
 
+
+            // The First thing - Start the Logging BG worker
+            Logging.Common.AddLogItem("Starting Logging Background Worker", "Info", "Program.Main");
+
+            BackgroundWorker loggingBGWorker = new BackgroundWorker();
+            loggingBGWorker.WorkerReportsProgress = true;
+            loggingBGWorker.WorkerSupportsCancellation = true;
+            loggingBGWorker.DoWork += loggingBGWorker_DoWork;
+
+            // Start the Logging Background Worker
+            loggingBGWorker.RunWorkerAsync(appSettings);
+
+
+            
+
+            // Test SQL Connection
+            Logging.Common.AddLogItem("Testing SQL Connection", "Info", "Program.Main");
+            
             if (DatabaseFunctions.TestSQLConnection(appSettings.Database))
             {
-                Console.WriteLine("SQL Connection Successful");
+                Logging.Common.AddLogItem("SQL Connection Successful", "Info", "Program.Main");
             }
             else
             {
-                Console.WriteLine("SQL Connection Failed");
+                Logging.Common.AddLogItem("SQL Connection Failed", "Error", "Program.Main");
 
                 // Create Database
-                Console.WriteLine("Creating Database...");
+                Logging.Common.AddLogItem("Creating Database", "Info", "Program.Main");
                 DatabaseFunctions.CreateDatabase(appSettings.Database);
-                Console.WriteLine("Database Created");
-
             }
 
             // Check for Harvester IDs
-            Console.WriteLine("Checking for Harvester IDs...");
+            Logging.Common.AddLogItem("Checking for Harvester IDs", "Info", "Program.Main");
             if (appSettings.Harvester.HarvesterIDs.Count == 0)
             {
-                Console.WriteLine("No Harvester IDs Found");
-                Console.WriteLine("Please add Harvester IDs to the appsettings.json file");
-                Console.ReadLine();
-                return;
-
-                // TBD
+                Logging.Common.AddLogItem("No Harvester IDs found in appsettings.json", "Error", "Program.Main");
+                
                 // Stop Service
+                Logging.Common.AddLogItem("Stopping Service", "Info", "Program.Main");
+                StopService();
             }
             else
             {
-                Console.WriteLine("Harvester IDs Found: " + appSettings.Harvester.HarvesterIDs.Count);
+                Logging.Common.AddLogItem("Harvester IDs found in appsettings.json", "Info", "Program.Main");
+                // Log the Harvester IDs
+                foreach (var harvesterID in appSettings.Harvester.HarvesterIDs)
+                {
+                    Logging.Common.AddLogItem($"Harvester ID: {harvesterID}", "Info", "Program.Main");
+                }
             }
 
             // Start WebServer
+            Logging.Common.AddLogItem("Starting WebServer", "Info", "Program.Main");
+
             WebServer.Common webServer = new WebServer.Common(appSettings.WebServer);
             webServer.StartWebServer();
 
@@ -88,8 +120,8 @@ namespace TestingConsoleApp
             // ================ Do Stuff
 
             // Background Workers for Data Collection
-            Console.WriteLine("Starting Background Workers...");
-
+            Logging.Common.AddLogItem("Starting Background Workers", "Info", "Program.Main");
+            
             // Background Workers
             BackgroundWorker farmerDetailsBGWorker = new BackgroundWorker();
             farmerDetailsBGWorker.WorkerReportsProgress = true;
@@ -409,7 +441,6 @@ namespace TestingConsoleApp
                     SQLHandling.Common.sqlLines.AddRange(farmerDetailsList);
 
                     //// Get SQL Lines to Insert
-                    //Console.WriteLine("Getting SQL Lines to Insert...");
                     List<string> lines = new List<string>();
 
                     lines.AddRange(SQLHandling.Common.sqlLines);
@@ -418,16 +449,41 @@ namespace TestingConsoleApp
                     SQLHandling.Common.sqlLines.RemoveAll(x => lines.Contains(x));
 
                     //// Add Lines to SQL
-                    //Console.WriteLine("Adding SQL Lines to Database...");
-
                     DatabaseFunctions.InsertDataToDatabase(appSettings.Database, lines);
                 }
             }
 
+            // Logging Background Worker
+            void loggingBGWorker_DoWork(object sender, DoWorkEventArgs e)
+            {
+                // Get the BackgroundWorker that raised this event.
+                BackgroundWorker worker = sender as BackgroundWorker;
 
+                // Get Settings
+                ApplicationSettings applicationSettings = (ApplicationSettings)e.Argument;
 
-            Console.WriteLine("Starting Background Workers...");
+                // Do Work Loop
+                while (!worker.CancellationPending)
+                {
+                    // Temp Holder for Log Items
+                    List<Logging.LogItem> logItemsTemp = new List<Logging.LogItem>();
 
+                    // Get Log Items
+                    logItemsTemp.AddRange(Logging.Common.LogItems);
+
+                    // Remove all LogItems that have been logged
+                    Logging.Common.LogItems.RemoveAll(x => logItemsTemp.Contains(x));
+
+                    // Add Log Items to Log File
+                    Logging.Logging.LogMessage(logItemsTemp, applicationSettings.Logging.LogFilePath);
+
+                    // Sleep for Collection Interval
+                    System.Threading.Thread.Sleep(1000);
+                }
+                e.Cancel = true; // Cancel the worker
+            };
+
+            Logging.Common.AddLogItem("Logging Background Worker Started", "Info", "Program.Main");
             farmerDetailsBGWorker.RunWorkerAsync(appSettings);
             farmerBlocksBGWorker.RunWorkerAsync(appSettings);
             farmerPayoutsBGWorker.RunWorkerAsync(appSettings);
@@ -436,7 +492,7 @@ namespace TestingConsoleApp
             farmerPlotsBGWorker.RunWorkerAsync(appSettings);
             sqlBGWorker.RunWorkerAsync(appSettings);
 
-            Console.WriteLine("Background Workers Started");
+            Logging.Common.AddLogItem("Background Workers Started", "Info", "Program.Main");
 
 
 

@@ -20,7 +20,7 @@ namespace DataCollection.SpaceFarmers
         {
             while (Common.IsAPICallActive) // Wait until the API call is not active
             {
-                Console.WriteLine("FarmerPayoutBatches: An API Call is already active, waiting for it to finish before making a new call.");
+                Logging.Common.AddLogItem("FarmerPayoutBatches: An API Call is already active, waiting for it to finish before making a new call.", "Info", "FarmerBlocks");
                 await Task.Delay(10000); // Wait for 10 seconds before checking again
             }
 
@@ -63,7 +63,7 @@ namespace DataCollection.SpaceFarmers
                             if (pageData?.data != null)
                                 farmerPayoutBatchesResponse.AddRange(pageData.data);
 
-                            Console.WriteLine("Payout Batches Data, Page " + counter + " of " + totalpages);
+                            Logging.Common.AddLogItem("Farmer Payout Batches Data, Page " + counter + " of " + (pageData?.links?.total_pages ?? 0), "Info", "FarmerPayoutBatches");
 
                             totalpages = pageData?.links?.total_pages ?? 0;
                             counter++;
@@ -77,7 +77,7 @@ namespace DataCollection.SpaceFarmers
                                 {
                                     if (payoutBatch.attributes.timestamp < lastUpdateTimeStamp)
                                     {
-                                        Console.WriteLine("Farmer Payout Batches Data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages);
+                                        Logging.Common.AddLogItem("Farmer Payout Batches Data is older than last update timestamp, stopping API calls at page " + counter + " of " + totalpages, "Info", "FarmerPayoutBatches");
 
                                         nextUrl = null;
                                         break;
@@ -121,8 +121,8 @@ namespace DataCollection.SpaceFarmers
                 catch (Exception ex)
                 {
                     // Temp for testing
-                    Console.WriteLine("Error Retreiving Launcher Payout Batches: " + launcher);
-                    Console.WriteLine("Error Details: " + ex.Message);
+                    Logging.Common.AddLogItem("Error Retreiving Launcher Payout Batches: " + launcher, "Error", "FarmerBlocks");
+                    Logging.Common.AddLogItem("Error Details: " + ex.Message, "Error", "FarmerBlocks");
                     Common.IsAPICallActive = false; // Set the API call as inactive
 
                     // Add to LogFile
