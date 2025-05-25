@@ -43,7 +43,7 @@ namespace WebServer
                 }
             }
             // Start the HTTP Server
-            await StartServer();
+            await StartServerWithRestart();
         }
 
         public void StopWebServer()
@@ -65,87 +65,110 @@ namespace WebServer
 
         private string ProcessPhpPage(string pageFileName)
         {
-            string phpCompilerPath = webServerSettings.PhpCompilerPath + "\\php.exe";
-
-            Process proc = new Process();
-            proc.StartInfo.FileName = phpCompilerPath;
-            proc.StartInfo.Arguments = "-d \"display_errors=1\" -d \"error_reporting=E_PARSE\" \"" + pageFileName + "\"";
-            proc.StartInfo.CreateNoWindow = true;
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.RedirectStandardOutput = true;
-            proc.StartInfo.RedirectStandardError = true;
-            proc.Start();
-            string res = proc.StandardOutput.ReadToEnd();
-            if (string.IsNullOrEmpty(res))
+            try
             {
-                res = proc.StandardError.ReadToEnd();
-                res = "<h2 style=\"color:red;\">Error!</h2><hr/> <h4>Error Details :</h4> <pre>" + res + "</pre>";
-                proc.StandardError.Close();
+                string phpCompilerPath = webServerSettings.PhpCompilerPath;
+
+                var proc = new Process();
+                proc.StartInfo.FileName = phpCompilerPath;
+                proc.StartInfo.Arguments = $"-d \"display_errors=1\" -d \"error_reporting=E_ALL\" \"{pageFileName}\"";
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.StartInfo.RedirectStandardError = true;
+
+                proc.Start();
+
+                string output = proc.StandardOutput.ReadToEnd();
+                string error = proc.StandardError.ReadToEnd();
+
+                proc.WaitForExit();
+
+                if (!string.IsNullOrWhiteSpace(error))
+                {
+                    return $"<h2 style=\"color:red;\">PHP Error</h2><pre>{error}</pre>";
+                }
+
+                return output;
             }
-            if (res.StartsWith("\nParse error: syntax error"))
-                res = "<h2 style=\"color:red;\">Error!</h2><hr/> <h4>Error Details :</h4> <pre>" + res + "</pre>";
-
-
-            proc.StandardOutput.Close();
-
-            proc.Close();
-            return res;
+            catch (Exception ex)
+            {
+                return $"<h2 style=\"color:red;\">Exception</h2><pre>{ex.Message}</pre>";
+            }
         }
 
+        private async Task StartServerWithRestart()
+        {
+            while (true)
+            {
+                try
+                {
+                    await StartServer();
+                }
+                catch (Exception ex)
+                {
+                    // Optional: log error
+                    Console.WriteLine($"Server error: {ex.Message}");
+                }
+
+                // Wait before retrying
+                await Task.Delay(1000);
+            }
+        }
 
         private async Task StartServer()
         {
             HttpServ = new HttpListener();
             HttpServ.Prefixes.Add("http://localhost:" + webServerSettings.WebServerPort.ToString() + "/");
             HttpServ.Start();
-            while (true)
+
+            try
             {
-                try
+                while (true)
                 {
                     var ctx = await HttpServ.GetContextAsync();
+                    var page = webServerSettings.WebServerPath;
 
-                    var page = webServerSettings.WebServerPath + "/index.php";
+                    var requestedPath = ctx.Request.Url.LocalPath.TrimStart('/').Replace("/", "\\");
+                    page = Path.Combine(webServerSettings.WebServerPath, requestedPath);
 
-                    if (ctx.Request.Url.LocalPath != "/")
-                    {
-                        page = webServerSettings.WebServerPath + ctx.Request.Url.LocalPath;
-                    }
+                    Console.WriteLine($"Request for: ");
+                    Console.WriteLine($"{page}");
+
 
                     if (File.Exists(page))
                     {
                         string file;
                         var ext = new FileInfo(page);
+
                         if (ext.Extension == ".php")
-                        {
                             file = ProcessPhpPage(page);
-                        }
                         else
-                        {
                             file = File.ReadAllText(page);
-                        }
 
                         await ctx.Response.OutputStream.WriteAsync(ASCIIEncoding.UTF8.GetBytes(file), 0, file.Length);
-                        ctx.Response.OutputStream.Close();
-                        ctx.Response.Close();
-
                     }
                     else
                     {
                         ctx.Response.StatusCode = 404;
                         var file = "<h2 style=\"color:red;\">404 File Not Found !!!</h2>";
                         await ctx.Response.OutputStream.WriteAsync(ASCIIEncoding.UTF8.GetBytes(file), 0, file.Length);
-                        ctx.Response.OutputStream.Close();
-
-                        ctx.Response.Close();
                     }
-                }
-                catch (Exception ex)
-                {
-                    break;
+
+                    ctx.Response.OutputStream.Close();
+                    ctx.Response.Close();
                 }
             }
-
-
+            catch (Exception ex)
+            {
+                Console.WriteLine("Web Server Stopped or Error Occurred. Restarting...");
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                HttpServ.Stop();
+                HttpServ.Close();
+            }
         }
     }
 }

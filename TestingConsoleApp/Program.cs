@@ -484,13 +484,13 @@ namespace TestingConsoleApp
             };
 
             Logging.Common.AddLogItem("Logging Background Worker Started", "Info", "Program.Main");
-            farmerDetailsBGWorker.RunWorkerAsync(appSettings);
-            farmerBlocksBGWorker.RunWorkerAsync(appSettings);
-            farmerPayoutsBGWorker.RunWorkerAsync(appSettings);
-            farmerPayoutBatchesBGWorker.RunWorkerAsync(appSettings);
-            farmerPartialsBGWorker.RunWorkerAsync(appSettings);
-            farmerPlotsBGWorker.RunWorkerAsync(appSettings);
-            sqlBGWorker.RunWorkerAsync(appSettings);
+            //farmerDetailsBGWorker.RunWorkerAsync(appSettings);
+            //farmerBlocksBGWorker.RunWorkerAsync(appSettings);
+            //farmerPayoutsBGWorker.RunWorkerAsync(appSettings);
+            //farmerPayoutBatchesBGWorker.RunWorkerAsync(appSettings);
+            //farmerPartialsBGWorker.RunWorkerAsync(appSettings);
+            //farmerPlotsBGWorker.RunWorkerAsync(appSettings);
+            //sqlBGWorker.RunWorkerAsync(appSettings);
 
             Logging.Common.AddLogItem("Background Workers Started", "Info", "Program.Main");
 
