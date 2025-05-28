@@ -3,28 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FDB02E82-C253-4E8E-84E1-5EC9EF2655AE}|WebServer\\WebServer.csproj|c:\\users\\justinbland\\documents\\github\\spacefarmers.io_data_collection\\webserver\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDB02E82-C253-4E8E-84E1-5EC9EF2655AE}|WebServer\\WebServer.csproj|solutionrelative:webserver\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{22A53137-8A63-455B-A90C-DAE46F8EA407}|TestingConsoleApp\\TestingConsoleApp.csproj|c:\\users\\justinbland\\documents\\github\\spacefarmers.io_data_collection\\testingconsoleapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{22A53137-8A63-455B-A90C-DAE46F8EA407}|TestingConsoleApp\\TestingConsoleApp.csproj|C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\testingconsoleapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{22A53137-8A63-455B-A90C-DAE46F8EA407}|TestingConsoleApp\\TestingConsoleApp.csproj|solutionrelative:testingconsoleapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{783EE5E5-7374-45E9-ACBB-8E1C016A5786}|Logging\\Logging.csproj|C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\logging\\logging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{783EE5E5-7374-45E9-ACBB-8E1C016A5786}|Logging\\Logging.csproj|solutionrelative:logging\\logging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{49FC7BE7-DDD6-4089-B633-807B9334B3C6}|Settings\\Settings.csproj|C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\settings\\initalsetup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49FC7BE7-DDD6-4089-B633-807B9334B3C6}|Settings\\Settings.csproj|solutionrelative:settings\\initalsetup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{49FC7BE7-DDD6-4089-B633-807B9334B3C6}|Settings\\Settings.csproj|C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\settings\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49FC7BE7-DDD6-4089-B633-807B9334B3C6}|Settings\\Settings.csproj|solutionrelative:settings\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{783EE5E5-7374-45E9-ACBB-8E1C016A5786}|Logging\\Logging.csproj|C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\logging\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{783EE5E5-7374-45E9-ACBB-8E1C016A5786}|Logging\\Logging.csproj|solutionrelative:logging\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -43,75 +23,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Common.cs",
-              "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\WebServer\\Common.cs",
-              "RelativeDocumentMoniker": "WebServer\\Common.cs",
-              "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\WebServer\\Common.cs",
-              "RelativeToolTip": "WebServer\\Common.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAE8AAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T02:50:21.471Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Common.cs",
-              "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\Settings\\Common.cs",
-              "RelativeDocumentMoniker": "Settings\\Common.cs",
-              "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\Settings\\Common.cs",
-              "RelativeToolTip": "Settings\\Common.cs",
-              "ViewState": "AQIAAFgAAAAAAAAAAADgv24AAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T00:20:27.461Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Logging.cs",
-              "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\Logging\\Logging.cs",
-              "RelativeDocumentMoniker": "Logging\\Logging.cs",
-              "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\Logging\\Logging.cs",
-              "RelativeToolTip": "Logging\\Logging.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T00:14:57.617Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Common.cs",
-              "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\Logging\\Common.cs",
-              "RelativeDocumentMoniker": "Logging\\Common.cs",
-              "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\Logging\\Common.cs",
-              "RelativeToolTip": "Logging\\Common.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T23:28:26.841Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "InitalSetup.cs",
-              "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\Settings\\InitalSetup.cs",
-              "RelativeDocumentMoniker": "Settings\\InitalSetup.cs",
-              "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\Settings\\InitalSetup.cs",
-              "RelativeToolTip": "Settings\\InitalSetup.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T23:26:34.525Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\TestingConsoleApp\\Program.cs",
               "RelativeDocumentMoniker": "TestingConsoleApp\\Program.cs",
               "ToolTip": "C:\\Users\\JustinBland\\Documents\\GitHub\\SpaceFarmers.io_Data_Collection\\TestingConsoleApp\\Program.cs",
               "RelativeToolTip": "TestingConsoleApp\\Program.cs",
-              "ViewState": "AQIAANEBAAAAAAAAAAAiwOwBAAA2AAAA",
+              "ViewState": "AQIAAMoBAAAAAAAAAAAiwOwBAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-24T23:27:41.532Z",
               "EditorCaption": ""
