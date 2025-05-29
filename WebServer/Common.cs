@@ -127,32 +127,55 @@ namespace WebServer
                 while (true)
                 {
                     var ctx = await HttpServ.GetContextAsync();
-                    var page = webServerSettings.WebServerPath;
+                    var rawPath = ctx.Request.Url.LocalPath.TrimStart('/').Replace("/", "\\");
+                    var requestedPath = Path.Combine(webServerSettings.WebServerPath, rawPath);
 
-                    var requestedPath = ctx.Request.Url.LocalPath.TrimStart('/').Replace("/", "\\");
-                    page = Path.Combine(webServerSettings.WebServerPath, requestedPath);
+                    Console.WriteLine($"Request for: {requestedPath}");
 
-                    Console.WriteLine($"Request for: ");
-                    Console.WriteLine($"{page}");
+                    string pageToServe = requestedPath;
 
-
-                    if (File.Exists(page))
+                    // If it's a directory, look for index.html or index.php
+                    if (Directory.Exists(requestedPath))
                     {
-                        string file;
-                        var ext = new FileInfo(page);
+                        string indexHtml = Path.Combine(requestedPath, "index.html");
+                        string indexPhp = Path.Combine(requestedPath, "index.php");
 
-                        if (ext.Extension == ".php")
-                            file = ProcessPhpPage(page);
+                        if (File.Exists(indexHtml)) pageToServe = indexHtml;
+                        else if (File.Exists(indexPhp)) pageToServe = indexPhp;
                         else
-                            file = File.ReadAllText(page);
+                        {
+                            ctx.Response.StatusCode = 403;
+                            await RespondWithText(ctx, "<h2>403 - Directory access is forbidden.</h2>");
+                            continue;
+                        }
+                    }
 
-                        await ctx.Response.OutputStream.WriteAsync(ASCIIEncoding.UTF8.GetBytes(file), 0, file.Length);
+                    if (File.Exists(pageToServe))
+                    {
+                        string ext = Path.GetExtension(pageToServe).ToLower();
+                        string mimeType = GetMimeType(ext);
+                        ctx.Response.ContentType = mimeType;
+
+                        if (ext == ".php")
+                        {
+                            string result = ProcessPhpPage(pageToServe);
+                            await RespondWithText(ctx, result);
+                        }
+                        else if (IsBinaryMimeType(mimeType))
+                        {
+                            byte[] buffer = File.ReadAllBytes(pageToServe);
+                            await ctx.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
+                        }
+                        else
+                        {
+                            string content = File.ReadAllText(pageToServe);
+                            await RespondWithText(ctx, content);
+                        }
                     }
                     else
                     {
                         ctx.Response.StatusCode = 404;
-                        var file = "<h2 style=\"color:red;\">404 File Not Found !!!</h2>";
-                        await ctx.Response.OutputStream.WriteAsync(ASCIIEncoding.UTF8.GetBytes(file), 0, file.Length);
+                        await RespondWithText(ctx, "<h2 style=\"color:red;\">404 - File Not Found</h2>");
                     }
 
                     ctx.Response.OutputStream.Close();
@@ -169,6 +192,63 @@ namespace WebServer
                 HttpServ.Stop();
                 HttpServ.Close();
             }
+        }
+
+        private async Task RespondWithText(HttpListenerContext ctx, string content)
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes(content);
+            ctx.Response.ContentType = "text/html";
+            await ctx.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
+        }
+
+        private string GetMimeType(string extension)
+        {
+            switch (extension)
+            {
+                case ".html":
+                case ".htm":
+                    return "text/html";
+                case ".css":
+                    return "text/css";
+                case ".js":
+                    return "application/javascript";
+                case ".json":
+                    return "application/json";
+                case ".png":
+                    return "image/png";
+                case ".jpg":
+                case ".jpeg":
+                    return "image/jpeg";
+                case ".gif":
+                    return "image/gif";
+                case ".ico":
+                    return "image/x-icon";
+                case ".svg":
+                    return "image/svg+xml";
+                case ".woff":
+                    return "font/woff";
+                case ".woff2":
+                    return "font/woff2";
+                case ".ttf":
+                    return "font/ttf";
+                case ".otf":
+                    return "font/otf";
+                case ".eot":
+                    return "application/vnd.ms-fontobject";
+                case ".xml":
+                    return "application/xml";
+                case ".pdf":
+                    return "application/pdf";
+                default:
+                    return "application/octet-stream";
+            }
+        }
+
+        private bool IsBinaryMimeType(string mimeType)
+        {
+            return mimeType.StartsWith("image/") ||
+                   mimeType.StartsWith("application/") && !mimeType.Contains("javascript") && !mimeType.Contains("json") && !mimeType.Contains("xml") ||
+                   mimeType.StartsWith("font/");
         }
     }
 }
