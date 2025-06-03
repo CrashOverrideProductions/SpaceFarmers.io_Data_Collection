@@ -131,10 +131,9 @@ namespace WebServer
                     var requestedPath = Path.Combine(webServerSettings.WebServerPath, rawPath);
 
                     Console.WriteLine($"Request for: {requestedPath}");
-
                     string pageToServe = requestedPath;
 
-                    // If it's a directory, look for index.html or index.php
+                    // Handle default document (index.html / index.php)
                     if (Directory.Exists(requestedPath))
                     {
                         string indexHtml = Path.Combine(requestedPath, "index.html");
@@ -145,7 +144,9 @@ namespace WebServer
                         else
                         {
                             ctx.Response.StatusCode = 403;
+                            ctx.Response.ContentType = "text/html";
                             await RespondWithText(ctx, "<h2>403 - Directory access is forbidden.</h2>");
+                            ctx.Response.Close();
                             continue;
                         }
                     }
@@ -156,6 +157,12 @@ namespace WebServer
                         string mimeType = GetMimeType(ext);
                         ctx.Response.ContentType = mimeType;
 
+                        // Set CORS header for fonts and binary files
+                        if (IsBinaryMimeType(mimeType) || mimeType.StartsWith("font/"))
+                        {
+                            ctx.Response.AddHeader("Access-Control-Allow-Origin", "*");
+                        }
+
                         if (ext == ".php")
                         {
                             string result = ProcessPhpPage(pageToServe);
@@ -164,7 +171,20 @@ namespace WebServer
                         else if (IsBinaryMimeType(mimeType))
                         {
                             byte[] buffer = File.ReadAllBytes(pageToServe);
-                            await ctx.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
+
+                            ctx.Response.ContentType = mimeType;
+                            ctx.Response.AddHeader("Access-Control-Allow-Origin", "*");
+                            ctx.Response.SendChunked = false; // ✅ prevent font corruption
+                            ctx.Response.ContentLength64 = buffer.Length;
+
+                            using (var output = ctx.Response.OutputStream)
+                            {
+                                await output.WriteAsync(buffer, 0, buffer.Length);
+                                await output.FlushAsync(); // ✅ ensure all bytes are sent
+                            }
+
+                            ctx.Response.Close(); // ✅ finalize cleanly
+                            continue;
                         }
                         else
                         {
@@ -175,6 +195,7 @@ namespace WebServer
                     else
                     {
                         ctx.Response.StatusCode = 404;
+                        ctx.Response.ContentType = "text/html";
                         await RespondWithText(ctx, "<h2 style=\"color:red;\">404 - File Not Found</h2>");
                     }
 
@@ -194,12 +215,20 @@ namespace WebServer
             }
         }
 
+
         private async Task RespondWithText(HttpListenerContext ctx, string content)
         {
+            // Set Content-Type only if it's not already set (e.g., for HTML/PHP output)
+            if (string.IsNullOrEmpty(ctx.Response.ContentType) || ctx.Response.ContentType == "application/octet-stream")
+            {
+                ctx.Response.ContentType = "text/html";
+            }
+
             byte[] buffer = Encoding.UTF8.GetBytes(content);
-            ctx.Response.ContentType = "text/html";
             await ctx.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
         }
+
+
 
         private string GetMimeType(string extension)
         {
@@ -209,7 +238,7 @@ namespace WebServer
                 case ".htm":
                     return "text/html";
                 case ".css":
-                    return "text/css";
+                    return "text/css"; 
                 case ".js":
                     return "application/javascript";
                 case ".json":
